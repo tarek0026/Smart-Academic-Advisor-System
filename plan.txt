@@ -1,0 +1,166 @@
+📘 Smart Academic Advisor System – Development Plan
+🧠 Phase 1: Problem Understanding & Requirements
+
+The system aims to help students plan their academic schedule efficiently.
+
+Functional Requirements:
+Accept student input:
+Name
+ID
+GPA
+Completed courses
+Determine the appropriate academic load:
+Half Load / Normal Load / Overload
+Display:
+Available Courses
+Recommended Courses (based on roadmap)
+Handle invalid inputs and errors properly
+
+
+🗂️ Phase 2: Data Design
+Course Structure:
+
+Each course should include:
+
+Course Name
+Course Code
+Prerequisites
+Semester (based on roadmap)
+Credit Hours
+
+Roadmap:
+Define courses for each semester
+This will be used to determine recommended courses
+
+
+Student Structure:
+ID
+Name
+GPA
+Completed Courses
+
+
+
+⚙️ Phase 3: System Rules (Logic)
+Rule 1: Load Determination
+Low GPA → Half Load
+متوسط GPA → Normal Load
+High GPA → Overload
+
+(Define exact GPA ranges and number of courses for each case)
+
+
+Rule 2: Available Courses
+
+A course is considered available if:
+
+All its prerequisites are completed
+The student has not taken it before
+
+
+
+
+Rule 3: Recommended Courses (Enhanced)
+
+Recommended courses are selected based on availability, roadmap alignment, and priority rules.
+
+Step 1: Base Filtering
+
+A course is considered for recommendation if:
+
+It belongs to the current semester in the roadmap
+AND it is available (all prerequisites are satisfied)
+Step 2: Handling Delayed Courses (Higher Priority)
+Any course from previous semesters that the student has not completed
+AND is available
+
+➡️ These courses should be prioritized over current semester courses
+
+Step 3: Priority Optimization (Smart Selection)
+
+If there is a conflict or limited load, courses are selected based on:
+
+Delayed courses (from previous semesters) → Highest priority
+Courses from the current semester
+Other available courses
+
+
+
+🔄 Phase 4: System Flow
+Receive student input
+Validate inputs
+Determine load type
+Retrieve all courses
+Filter available courses
+Filter recommended courses
+Adjust number of courses based on load
+Display results
+
+
+🖥️ Phase 5: GUI Design (Java)
+Input Screen:
+Name
+ID
+GPA
+Completed Courses (dropdown or checklist)
+Action:
+"Generate Plan" button
+Output Screen:
+Load Type
+Available Courses
+Recommended Courses
+Error Messages:
+Invalid GPA
+Empty fields
+Invalid course input
+
+
+
+⚠️ Phase 6: Error Handling
+
+The system must handle:
+
+Invalid GPA format (e.g., text instead of number)
+Missing inputs
+
+
+
+Each case should display a clear error message instead of crashing.
+
+📸 Phase 7: Testing & Snapshots
+
+Test different scenarios:
+
+Low GPA
+High GPA
+Student with many completed courses
+New student
+
+Include screenshots of:
+
+Input screen
+Error cases
+Final output
+
+
+📄 Phase 8: Documentation
+
+The project documentation should include:
+
+Introduction
+Problem Statement
+System Design (flow + rules)
+Implementation Overview
+Screenshots
+Conclusion
+
+
+
+Understand → Design Data → Define Rules → Build Flow → GUI → Testing → Documentation
+
+
+🔥 Phase 9: Enhancements (Optional)
+Warning for delaying important courses
+Course prioritization
+Credit hour limits instead of number of courses
+Schedule conflict detection
