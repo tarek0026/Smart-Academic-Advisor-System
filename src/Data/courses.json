@@ -397,5 +397,326 @@
     "category": "Social Sciences",
     "creditHours": 2,
     "prerequisites": []
+},
+
+{
+    "code": "CSCI364",
+    "year": 3,
+    "semester": 0,
+    "name": "Programming Numerical Methods",
+    "category": "CS_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI112", "MATH112i"]
+},
+
+{
+    "code": "CSCI322",
+    "year": 3,
+    "semester": 0,
+    "name": "Data Analysis",
+    "category": "CS_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["MATH201"]
+},
+
+{
+    "code": "CSCI313",
+    "year": 3,
+    "semester": 0,
+    "name": "Software Engineering",
+    "category": "CS_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+
+{
+    "code": "CSCI415",
+    "year": 3,
+    "semester": 0,
+    "name": "Compiler Design",
+    "category": "CS_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI208", "CSCI311"]
+},
+
+{
+    "code": "CSCI304",
+    "year": 3,
+    "semester": 0,
+    "name": "System Analysis and Design",
+    "category": "CS_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+
+{
+    "code": "AIS201",
+    "year": 2,
+    "semester": 2,
+    "name": "Introduction to Artificial Intelligence",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI207"]
+},
+
+{
+    "code": "AIS301",
+    "year": 3,
+    "semester": 1,
+    "name": "Machine Learning",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["AIS201"]
+},
+
+{
+    "code": "AIS302",
+    "year": 3,
+    "semester": 2,
+    "name": "Artificial Neural Networks",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "AIS323",
+    "year": 3,
+    "semester": 2,
+    "name": "Optimization Techniques",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "AIS331",
+    "year": 3,
+    "semester": 2,
+    "name": "Data Mining and Analytics",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "AIS411",
+    "year": 4,
+    "semester": 1,
+    "name": "Natural Language Processing",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "CSCI363",
+    "year": 3,
+    "semester": 1,
+    "name": "Cloud Computing and Networking",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+
+{
+    "code": "AIS351",
+    "year": 3,
+    "semester": 2,
+    "name": "Digital Image Processing",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+
+{
+    "code": "CSCI461",
+    "year": 4,
+    "semester": 1,
+    "name": "Introduction to Big Data",
+    "category": "AI_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI305"]
+},
+
+{
+    "code": "AIS412",
+    "year": 4,
+    "semester": 0,
+    "name": "Deep Learning",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS302"]
+},
+
+{
+    "code": "AIS421",
+    "year": 4,
+    "semester": 0,
+    "name": "NLP Applications",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS411"]
+},
+
+{
+    "code": "AIS431",
+    "year": 4,
+    "semester": 0,
+    "name": "Intelligent Decision Support Systems",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "AIS455",
+    "year": 4,
+    "semester": 0,
+    "name": "Computer Vision",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS351"]
+},
+
+{
+    "code": "AIS462",
+    "year": 4,
+    "semester": 0,
+    "name": "Computational Intelligence",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+
+{
+    "code": "AIS463",
+    "year": 4,
+    "semester": 0,
+    "name": "Knowledge Based Systems",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI461"]
+},
+
+{
+    "code": "AIS477",
+    "year": 4,
+    "semester": 0,
+    "name": "S.T. in Artificial Intelligence",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "AIS480",
+    "year": 4,
+    "semester": 0,
+    "name": "Expert Systems",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "CSCI465",
+    "year": 4,
+    "semester": 0,
+    "name": "Introduction to Parallel Computing",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI363"]
+},
+
+{
+    "code": "CSCI469",
+    "year": 4,
+    "semester": 0,
+    "name": "Selected Topics in Big Data and Data Science",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS301"]
+},
+
+{
+    "code": "CSCI478",
+    "year": 4,
+    "semester": 0,
+    "name": "High Performance Computing",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+
+{
+    "code": "CSCI479",
+    "year": 4,
+    "semester": 0,
+    "name": "Selected Topics in Computer Science",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["AIS351", "AIS301"]
+},
+
+{
+    "code": "CSCI481",
+    "year": 4,
+    "semester": 0,
+    "name": "Real Time Operating Systems",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI315"]
+},
+
+{
+    "code": "CSCI482",
+    "year": 4,
+    "semester": 0,
+    "name": "Information and Cyber Security",
+    "category": "AI_ELECTIVES",
+    "creditHours": 3,
+    "prerequisites": ["CSCI363", "CSCI315"]
+},
+
+{
+    "code": "AIS390",
+    "year": 3,
+    "semester": 1,
+    "name": "Industrial/Research Training I",
+    "category": "Training",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "AIS490",
+    "year": 4,
+    "semester": 1,
+    "name": "Industrial/Research Training II",
+    "category": "Training",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "AIS495",
+    "year": 4,
+    "semester": 1,
+    "name": "Senior Project I",
+    "category": "Training",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+{
+    "code": "AIS496",
+    "year": 4,
+    "semester": 2,
+    "name": "Senior Project II",
+    "category": "Training",
+    "creditHours": 3,
+    "prerequisites": []
 }
 ]
