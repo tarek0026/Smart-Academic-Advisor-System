@@ -1,0 +1,191 @@
+[
+{
+    "code": "MATH100",
+    "year": 1,
+    "semester": 0,
+    "name": "Pre-calculus",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "MATH111i",
+    "year": 1,
+    "semester": 1,
+    "name": "Analytical Geometry & Calculus I",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH100"]
+},
+{
+    "code": "MATH112i",
+    "year": 1,
+    "semester": 2,
+    "name": "Analytical Geometry & Calculus II",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH111i"]
+},
+{
+    "code": "MATH201",
+    "year": 1,
+    "semester": 2,
+    "name": "Introduction to Probability & Statistics",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH111i"]
+},
+{
+    "code": "MATH203i",
+    "year": 2,
+    "semester": 2,
+    "name": "Differential Equations",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH111i"]
+},
+{
+    "code": "MATH211",
+    "year": 2,
+    "semester": 1,
+    "name": "Discrete Mathematics",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH111i"]
+},
+{
+    "code": "MATH301i",
+    "year": 2,
+    "semester": 1,
+    "name": "Linear Algebra",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH111i"]
+},
+{
+    "code": "PHYS101C",
+    "year": 1,
+    "semester": 1,
+    "name": "Physics I",
+    "category": "PHYSICS",
+    "creditHours": 3,
+    "prerequisites": ["MATH111i"]
+},
+{
+    "code": "CSCI101",
+    "year": 1,
+    "semester": 1,
+    "name": "Computer & Information Skills",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "CSCI102",
+    "year": 1,
+    "semester": 1,
+    "name": "Introduction to Programming",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "CSCI112",
+    "year": 1,
+    "semester": 2,
+    "name": "Intermediate Programming",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI102", "CSCI101"]
+},
+{
+    "code": "CSCI205",
+    "year": 1,
+    "semester": 2,
+    "name": "Introduction to Computer Systems",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI102"]
+},
+{
+    "code": "CSCI207",
+    "year": 2,
+    "semester": 1,
+    "name": "Data Structures and Algorithms",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI112"]
+},
+{
+    "code": "CSCI208",
+    "year": 2,
+    "semester": 2,
+    "name": "Design and Analysis of Algorithms",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI207"]
+},
+{
+    "code": "CSCI212",
+    "year": 2,
+    "semester": 1,
+    "name": "Logic Design and Lab",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["ECEN101C"]
+},
+{
+    "code": "CSCI217",
+    "year": 2,
+    "semester": 2,
+    "name": "Advanced Computer Programming & Concept",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI207"]
+},
+{
+    "code": "CSCI305",
+    "year": 3,
+    "semester": 2,
+    "name": "Database Systems",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+{
+    "code": "CSCI311",
+    "year": 3,
+    "semester": 1,
+    "name": "Introduction to Computer Architecture",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI212"]
+},
+{
+    "code": "CSCI315",
+    "year": 3,
+    "semester": 2,
+    "name": "Operating Systems",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI311"]
+},
+{
+    "code": "CSCI410",
+    "year": 4,
+    "semester": 1,
+    "name": "Introduction to IoT",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI315"]
+},
+{
+    "code": "ECEN101C",
+    "year": 1,
+    "semester": 2,
+    "name": "Electric Circuits (CS)",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["PHYS101C"]
+}
+]
