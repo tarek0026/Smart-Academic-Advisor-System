@@ -187,5 +187,215 @@
     "category": "CS_CORE",
     "creditHours": 3,
     "prerequisites": ["PHYS101C"]
+},
+
+{
+    "code": "ENGL002",
+    "year": 1,
+    "semester": 1,
+    "name": "English I",
+    "category": "English",
+    "creditHours": 0,
+    "prerequisites": []
+},
+
+{
+    "code": "ENGL003",
+    "year": 1,
+    "semester": 2,
+    "name": "English II",
+    "category": "English",
+    "creditHours": 0,
+    "prerequisites": ["ENGL002"]
+},
+
+{
+    "code": "ENGL201",
+    "year": 2,
+    "semester": 1,
+    "name": "Writing Skills",
+    "category": "English",
+    "creditHours": 3,
+    "prerequisites": ["ENGL003"]
+},
+
+{
+    "code": "ENGL202",
+    "year": 2,
+    "semester": 2,
+    "name": "Communication and Presentation Skills",
+    "category": "English",
+    "creditHours": 0,
+    "prerequisites": []
+},
+
+{
+    "code": "ARTS105",
+    "year": 1,
+    "semester": 1,
+    "name": "Music Appreciation",
+    "category": "Humanities",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "ARTS201",
+    "year": 1,
+    "semester": 1,
+    "name": "Introduction to Photography",
+    "category": "Humanities",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "ARTS205",
+    "year": 1,
+    "semester": 1,
+    "name": "Music Theory",
+    "category": "Humanities",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "HUMA001/101",
+    "year": 2,
+    "semester": 1,
+    "name": "Intro.to Scientific & Critical Thinking",
+    "category": "Humanities",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "HUMA002",
+    "year": 2,
+    "semester": 1,
+    "name": "Introduction to Ethics",
+    "category": "Humanities",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "HUMA003",
+    "year": 1,
+    "semester": 1,
+    "name": "Selected Topics in Humanities & Arts",
+    "category": "Humanities",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "COMM401",
+    "year": 2,
+    "semester": 2,
+    "name": "Internship & Service Learning",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+{
+    "code": "PSCI201",
+    "year": 1,
+    "semester": 2,
+    "name": "Introduction to political science",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+{
+    "code": "PSYC201",
+    "year": 2,
+    "semester": 2,
+    "name": "Introduction to Psychology",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "PSYC203",
+    "year": 1,
+    "semester": 2,
+    "name": "Theories of Personalities",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "SPAN101",
+    "year": 2,
+    "semester": 2,
+    "name": "Introduction to Spanish Language",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "SSCI001",
+    "year": 2,
+    "semester": 2,
+    "name": "S.T.in Social Sciences",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "SSCI002",
+    "year": 1,
+    "semester": 2,
+    "name": "S.T.in World Cultures & Diversity",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "SSCI101",
+    "year": 2,
+    "semester": 2,
+    "name": "S.T.in Egyptian & Arab Heritage",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+{
+    "code": "SSCI102",
+    "year": 1,
+    "semester": 2,
+    "name": "S.T.in World Cultures & Diversity",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+{
+    "code": "SSCI103",
+    "year": 2,
+    "semester": 2,
+    "name": "Selected Topics in Social Sciences",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+{
+    "code": "SSCI201",
+    "year": 2,
+    "semester": 2,
+    "name": "Introduction to Sociology",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
 }
 ]
