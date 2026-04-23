@@ -2,18 +2,22 @@ package Testing;
 
 import Classes.Course;
 import Classes.Student;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CourseManager {
 
     private Map<String, Course> courseMap = new HashMap<>();
 
+    private final Gson gson = new Gson();
+
+    // Load courses from JSON file into courseMap
     public void loadCourses() {
         try {
             List<Course> courses = readCourses(Path.of("src", "Data", "courses.json"));
@@ -29,67 +33,43 @@ public class CourseManager {
         }
     }
 
+    // Gson Parsing
     private List<Course> readCourses(Path filePath) throws IOException {
+
         String json = Files.readString(filePath);
-        List<Course> courses = new ArrayList<>();
 
-        Matcher objectMatcher = Pattern.compile("\\{([^{}]*)\\}", Pattern.DOTALL).matcher(json);
-        while (objectMatcher.find()) {
-            String object = objectMatcher.group(1);
+        Type listType = new TypeToken<List<Course>>() {}.getType();
 
-            String code = getStringValue(object, "code");
-            String name = getStringValue(object, "name");
-            Set<String> prerequisites = getStringSet(object, "prerequisites");
-            int semester = getIntValue(object, "semester");
-            int creditHours = getIntValue(object, "creditHours");
+        List<Course> courses = gson.fromJson(json, listType);
 
-            if (code != null) {
-                courses.add(new Course(code, name, prerequisites, semester, creditHours));
-            }
+        if (courses == null) {
+            return new ArrayList<>();
         }
 
         return courses;
     }
 
-    private String getStringValue(String object, String key) {
-        Matcher matcher = Pattern.compile("\"" + key + "\"\\s*:\\s*\"([^\"]*)\"").matcher(object);
-        return matcher.find() ? matcher.group(1) : null;
-    }
-
-    private int getIntValue(String object, String key) {
-        Matcher matcher = Pattern.compile("\"" + key + "\"\\s*:\\s*(\\d+)").matcher(object);
-        return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0;
-    }
-
-    private Set<String> getStringSet(String object, String key) {
-        Matcher matcher = Pattern.compile("\"" + key + "\"\\s*:\\s*\\[(.*?)\\]", Pattern.DOTALL).matcher(object);
-        Set<String> values = new HashSet<>();
-
-        if (matcher.find()) {
-            Matcher valueMatcher = Pattern.compile("\"([^\"]*)\"").matcher(matcher.group(1));
-            while (valueMatcher.find()) {
-                values.add(valueMatcher.group(1));
-            }
-        }
-
-        return values;
-    }
-
+    // get all available courses into list of courses
     public List<Course> getAvailableCourses(Set<String> completed) {
 
         List<Course> available = new ArrayList<>();
 
         for (Course c : courseMap.values()) {
+
             boolean taken = completed.contains(c.getCode());
-            boolean prereqOk = completed.containsAll(c.getPrerequisites());
+            // boolean prereqOk = completed.containsAll(c.getPrerequisites());
+            Set<String> prereq = c.getPrerequisites();
+            boolean prereqOk = (prereq == null || completed.containsAll(prereq));
 
             if (!taken && prereqOk) {
                 available.add(c);
             }
         }
+
         return available;
     }
 
+    // Find recommended courses based on current semester and GPA
     public List<Course> getRecommendedCourses(Student student) {
 
         List<Course> available = getAvailableCourses(student.getCompletedCourses());
@@ -116,26 +96,26 @@ public class CourseManager {
 
         int max = Services.LoadService.getMaxCourses(student.getGpa());
 
+        if (result.isEmpty()) return new ArrayList<>();
+
         return result.subList(0, Math.min(max, result.size()));
     }
 
+    // Print all courses
     public void printCourses() {
         for (Course c : courseMap.values()) {
             System.out.println(c.getCode() + ": " + c.getName());
         }
     }
 
+    // Check if a student can take a course based on completed courses
     public boolean canTake(String code, Set<String> completed) {
+
         Course c = courseMap.get(code);
 
-        if (c == null)
+        if (c == null || c.getPrerequisites() == null)
             return false;
 
-        for (String pre : c.getPrerequisites()) {
-            if (!completed.contains(pre)) {
-                return false;
-            }
-        }
-        return true;
+        return completed.containsAll(c.getPrerequisites());
     }
 }
