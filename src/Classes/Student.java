@@ -84,13 +84,6 @@ public class Student {
         }
     }
 
-    private String normalize(String code) {
-        if (code == null)
-            return null;
-        String cleaned = code.trim().toUpperCase();
-        return cleaned.isEmpty() ? null : cleaned;
-    }
-
     // Methods
 
     public void addCompletedCourse(String code) {
@@ -123,9 +116,14 @@ public class Student {
         return completedCourses.size();
     }
 
+    public int getCurrentSemester() {
+        return currentSemester;
+    }
 
+    private String normalize(String code) {
+        return code.trim().toUpperCase();
+    }
 
-    
     @Override
     public String toString() {
         return "Student{" +

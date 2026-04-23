@@ -1,6 +1,7 @@
 package Testing;
 
 import Classes.Course;
+import Classes.Student;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -74,6 +75,50 @@ public class CourseManager {
         return values;
     }
 
+    public List<Course> getAvailableCourses(Set<String> completed) {
+
+        List<Course> available = new ArrayList<>();
+
+        for (Course c : courseMap.values()) {
+            boolean taken = completed.contains(c.getCode());
+            boolean prereqOk = completed.containsAll(c.getPrerequisites());
+
+            if (!taken && prereqOk) {
+                available.add(c);
+            }
+        }
+        return available;
+    }
+
+    public List<Course> getRecommendedCourses(Student student) {
+
+        List<Course> available = getAvailableCourses(student.getCompletedCourses());
+
+        List<Course> delayed = new ArrayList<>();
+        List<Course> current = new ArrayList<>();
+        List<Course> others = new ArrayList<>();
+
+        for (Course c : available) {
+
+            if (c.getSemester() < student.getCurrentSemester()) {
+                delayed.add(c);
+            } else if (c.getSemester() == student.getCurrentSemester()) {
+                current.add(c);
+            } else {
+                others.add(c);
+            }
+        }
+
+        List<Course> result = new ArrayList<>();
+        result.addAll(delayed);
+        result.addAll(current);
+        result.addAll(others);
+
+        int max = Services.LoadService.getMaxCourses(student.getGpa());
+
+        return result.subList(0, Math.min(max, result.size()));
+    }
+
     public void printCourses() {
         for (Course c : courseMap.values()) {
             System.out.println(c.getCode() + ": " + c.getName());
@@ -83,7 +128,8 @@ public class CourseManager {
     public boolean canTake(String code, Set<String> completed) {
         Course c = courseMap.get(code);
 
-        if (c == null) return false;
+        if (c == null)
+            return false;
 
         for (String pre : c.getPrerequisites()) {
             if (!completed.contains(pre)) {

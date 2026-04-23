@@ -1,27 +1,37 @@
 package Testing;
+
+import Classes.Student;
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        CourseManager manager = new CourseManager();
+        new ConsoleUI().start();
 
+        CourseManager manager = new CourseManager();
         manager.loadCourses();
 
-        System.out.println("\nAll Courses:");
-        manager.printCourses();
-
         Set<String> completed = new HashSet<>();
-        completed.add("MATH100");
-        completed.add("CSCI102");
-
-        System.out.println("\nCan take CSCI112?");
-        System.out.println(manager.canTake("CSCI112", completed));
-
-
         completed.add("CSCI101");
-        System.out.println("\nCan take CSCI112?");
-        System.out.println(manager.canTake("CSCI112", completed));
+
+        Student student = new Student(
+                "241001750",
+                "Tarek",
+                2.8,
+                2,
+                completed);
+
+        System.out.println("\nLoad Type: " + Services.LoadService.getLoadType(student.getGpa()));
+
+        System.out.println("\nAvailable Courses:");
+        for (var c : manager.getAvailableCourses(student.getCompletedCourses())) {
+            System.out.println(c.getCode());
+        }
+
+        System.out.println("\nRecommended Courses:");
+        for (var c : manager.getRecommendedCourses(student)) {
+            System.out.println(c.getCode());
+        }
     }
 }
