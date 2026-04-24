@@ -27,12 +27,15 @@ public class ConsoleUI {
         System.out.print("Enter current semester: ");
         int semester = Integer.parseInt(sc.nextLine());
 
+        System.out.print("Enter current year: ");
+        int year = Integer.parseInt(sc.nextLine());
+
         System.out.print("Enter completed courses (comma separated): ");
         String input = sc.nextLine();
 
         Set<String> completed = new HashSet<>(Arrays.asList(input.split(",")));
 
-        Student student = new Student(id, name, gpa, semester, completed);
+        Student student = new Student(id, name, gpa, semester, completed, year);
 
         System.out.println("\nLoad Type: " + LoadService.getLoadType(gpa));
 

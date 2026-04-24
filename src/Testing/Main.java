@@ -20,7 +20,8 @@ public class Main {
                 "Tarek",
                 2.8,
                 2,
-                completed);
+                completed,
+                1);
 
         System.out.println("\nLoad Type: " + Services.LoadService.getLoadType(student.getGpa()));
 

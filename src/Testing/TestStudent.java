@@ -11,8 +11,9 @@ public class TestStudent {
                 "241001750",
                 "Tarek",
                 4,
-                3,
-                Set.of(" cs101 ", "cS102")
+                1,
+                Set.of(" cs101 ", "cS102"),
+                2
         );
 
         // print student

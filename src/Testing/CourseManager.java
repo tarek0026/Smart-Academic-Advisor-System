@@ -2,25 +2,22 @@ package Testing;
 
 import Classes.Course;
 import Classes.Student;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CourseManager {
 
     private Map<String, Course> courseMap = new HashMap<>();
 
-    private final Gson gson = new Gson();
-
     // Load courses from JSON file into courseMap
     public void loadCourses() {
         try {
-            List<Course> courses = readCourses(Path.of("src", "Data", "courses.json"));
+            List<Course> courses = readCourses(Path.of("Data", "AI_courses.json"));
 
             for (Course c : courses) {
                 courseMap.put(c.getCode(), c);
@@ -37,16 +34,88 @@ public class CourseManager {
     private List<Course> readCourses(Path filePath) throws IOException {
 
         String json = Files.readString(filePath);
+        List<Course> courses = new ArrayList<>();
 
-        Type listType = new TypeToken<List<Course>>() {}.getType();
+        Pattern objectPattern = Pattern.compile("\\{(.*?)\\}", Pattern.DOTALL);
+        Matcher objectMatcher = objectPattern.matcher(json);
 
-        List<Course> courses = gson.fromJson(json, listType);
+        while (objectMatcher.find()) {
+            String objectBody = objectMatcher.group(1);
 
-        if (courses == null) {
-            return new ArrayList<>();
+            try {
+                String code = extractString(objectBody, "code");
+                String name = extractString(objectBody, "name");
+                String category = extractString(objectBody, "category");
+                int year = extractInt(objectBody, "year");
+                int semester = extractInt(objectBody, "semester");
+                int creditHours = extractInt(objectBody, "creditHours");
+                Set<String> prerequisites = extractStringSet(objectBody, "prerequisites");
+
+                courses.add(new Course(code, name, prerequisites, year, semester, creditHours, category));
+            } catch (IllegalArgumentException e) {
+                String code = safeExtractCode(objectBody);
+                System.out.println("Skipping invalid course record" +
+                        (code == null ? "" : " (" + code + ")") +
+                        ": " + e.getMessage());
+            }
         }
 
         return courses;
+    }
+
+    private String extractString(String objectBody, String fieldName) {
+        Pattern pattern = Pattern.compile("\"" + Pattern.quote(fieldName) + "\"\\s*:\\s*\"(.*?)\"", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(objectBody);
+
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("Missing field: " + fieldName);
+        }
+
+        return matcher.group(1);
+    }
+
+    private int extractInt(String objectBody, String fieldName) {
+        Pattern pattern = Pattern.compile("\"" + Pattern.quote(fieldName) + "\"\\s*:\\s*(-?\\d+)");
+        Matcher matcher = pattern.matcher(objectBody);
+
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("Missing field: " + fieldName);
+        }
+
+        return Integer.parseInt(matcher.group(1));
+    }
+
+    private Set<String> extractStringSet(String objectBody, String fieldName) {
+        Pattern pattern = Pattern.compile("\"" + Pattern.quote(fieldName) + "\"\\s*:\\s*\\[(.*?)\\]", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(objectBody);
+
+        if (!matcher.find()) {
+            return new HashSet<>();
+        }
+
+        String arrayBody = matcher.group(1).trim();
+        Set<String> values = new HashSet<>();
+
+        if (arrayBody.isEmpty()) {
+            return values;
+        }
+
+        Pattern itemPattern = Pattern.compile("\"(.*?)\"");
+        Matcher itemMatcher = itemPattern.matcher(arrayBody);
+
+        while (itemMatcher.find()) {
+            values.add(itemMatcher.group(1));
+        }
+
+        return values;
+    }
+
+    private String safeExtractCode(String objectBody) {
+        try {
+            return extractString(objectBody, "code");
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     // get all available courses into list of courses
@@ -113,7 +182,7 @@ public class CourseManager {
 
         Course c = courseMap.get(code);
 
-        if (c == null || c.getPrerequisites() == null)
+        if (c == null)
             return false;
 
         return completed.containsAll(c.getPrerequisites());
