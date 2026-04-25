@@ -1,11 +1,12 @@
-package Testing;
+package Application;
 
 import Classes.*;
 import Services.*;
 import java.util.*;
 
-// javac -cp ".;../lib/gson-2.10.1.jar" Testing/MainApp.java
-// java -cp ".;../lib/gson-2.10.1.jar" Testing.MainApp
+// javac -cp ".;../lib/gson-2.10.1.jar" Application/MainApp.java
+// java -cp ".;../lib/gson-2.10.1.jar" Application.MainApp
+
 public class MainApp {
 
     public static void main(String[] args) {
