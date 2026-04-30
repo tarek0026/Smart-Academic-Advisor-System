@@ -1,0 +1,559 @@
+[
+{
+    "code": "MATH100",
+    "year": 1,
+    "semester": 1,
+    "name": "Pre-calculus",
+    "category": "MATH",
+    "creditHours": 0,
+    "prerequisites": []
+},
+{
+    "code": "MATH111",
+    "year": 1,
+    "semester": 1,
+    "name": "Analytical Geometry & Calculus I",
+    "category": "MATH",
+    "creditHours": 4,
+    "prerequisites": ["MATH100"]
+},
+{
+    "code": "MATH112",
+    "year": 1,
+    "semester": 2,
+    "name": "Analytical Geometry & Calculus II",
+    "category": "MATH",
+    "creditHours": 4,
+    "prerequisites": ["MATH111"]
+},
+{
+    "code": "MATH201",
+    "year": 2,
+    "semester": 1,
+    "name": "Introduction to Probability & Statistic",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH111"]
+},
+{
+    "code": "MATH203",
+    "year": 2,
+    "semester": 2,
+    "name": "Differential Equations",
+    "category": "MATH",
+    "creditHours": 4,
+    "prerequisites": ["MATH111"]
+},
+{
+    "code": "MATH211",
+    "year": 2,
+    "semester": 1,
+    "name": "Discrete Mathematics",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH111"]
+},
+{
+    "code": "MATH301",
+    "year": 3,
+    "semester": 1,
+    "name": "Linear Algebra",
+    "category": "MATH",
+    "creditHours": 4,
+    "prerequisites": ["MATH112"]
+},
+
+
+{
+    "code": "MATH210",
+    "year": 2,
+    "semester": 1,
+    "name": "Calculus III",
+    "category": "MATH",
+    "creditHours": 3,
+    "prerequisites": ["MATH112"]
+},
+
+{
+    "code": "PHYS101C",
+    "year": 1,
+    "semester": 1,
+    "name": "Physics I",
+    "category": "PHYSICS",
+    "creditHours": 4,
+    "prerequisites":  ["MATH100|MATH111"]
+},
+{
+    "code": "CSCI101",
+    "year": 1,
+    "semester": 1,
+    "name": "Computer & Information Skills",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "CSCI102",
+    "year": 1,
+    "semester": 1,
+    "name": "Introduction to Programming",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "CSCI112",
+    "year": 1,
+    "semester": 2,
+    "name": "Intermediate Programming",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI102", "CSCI101"]
+},
+{
+    "code": "CSCI205",
+    "year": 1,
+    "semester": 2,
+    "name": "Introduction to Computer Systems",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI102"]
+},
+{
+    "code": "CSCI207",
+    "year": 2,
+    "semester": 1,
+    "name": "Data Structures and Algorithms",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI112"]
+},
+{
+    "code": "CSCI208",
+    "year": 2,
+    "semester": 2,
+    "name": "Design and Analysis of Algorithms",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI207"]
+},
+{
+    "code": "CSCI212",
+    "year": 2,
+    "semester": 1,
+    "name": "Logic Design and Lab",
+    "category": "CS_CORE",
+    "creditHours": 4,
+    "prerequisites": ["ECEN101C"]
+},
+{
+    "code": "CSCI217",
+    "year": 2,
+    "semester": 2,
+    "name": "Advanced Computer Programming & Concept",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI207"]
+},
+{
+    "code": "CSCI305",
+    "year": 3,
+    "semester": 2,
+    "name": "Database Systems",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+{
+    "code": "CSCI311",
+    "year": 3,
+    "semester": 1,
+    "name": "Introduction to Computer Architecture",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI212"]
+},
+{
+    "code": "CSCI315",
+    "year": 3,
+    "semester": 2,
+    "name": "Operating Systems",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI311"]
+},
+
+{
+    "code": "CSCI313",
+    "year": 3,
+    "semester": 1,
+    "name": "Software Engineering",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI217"]
+},
+
+{
+    "code": "CSCI322",
+    "year": 3,
+    "semester": 1,
+    "name": "Data Analysis",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["MATH201"]
+},
+{
+    "code": "CSCI463",
+    "year": 3,
+    "semester": 2,
+    "name": "Introduction to Computer Networks",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI207"]
+},
+
+{
+    "code": "ECEN101C",
+    "year": 1,
+    "semester": 2,
+    "name": "Electric Circuits (CS)",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["PHYS101C"]
+},
+{
+    "code": "CSCI415",
+    "year": 4,
+    "semester": 1,
+    "name": "Theory of Computing",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI208", "CSCI311"]
+},
+{
+    "code": "CSCI417",
+    "year": 4,
+    "semester": 1,
+    "name": "Machine Intelligence",
+    "category": "CS_CORE",
+    "creditHours": 3,
+    "prerequisites": ["CSCI208"]
+},
+
+
+{
+    "code": "ENGL101",
+    "year": 1,
+    "semester": 1,
+    "name": "English I",
+    "category": "English",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+
+{
+    "code": "ENGL102",
+    "year": 1,
+    "semester": 2,
+    "name": "English II",
+    "category": "English",
+    "creditHours": 3,
+    "prerequisites": ["ENGL101"]
+},
+
+
+{
+    "code": "ENGL201",
+    "year": 2,
+    "semester": 1,
+    "name": "Writing Skills",
+    "category": "English",
+    "creditHours": 3,
+    "prerequisites": ["ENGL102"]
+},
+
+
+{
+    "code": "ENGL202",
+    "year": 2,
+    "semester": 2,
+    "name": "Communication and Presentation Skills",
+    "category": "English",
+    "creditHours": 3,
+    "prerequisites": ["ENGL201"]
+},
+
+
+
+
+
+
+
+
+{
+    "code": "COMM401",
+    "year": 4,
+    "semester": 1,
+    "name": "Internship and Service Learning",
+    "category": "Training",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+{
+    "code": "CSCI490",
+    "year": 4,
+    "semester": 2,
+    "name": "Industrial/Research Training",
+    "category": "Training",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+
+
+{
+    "code": "CSCI495",
+    "year": 4,
+    "semester": 1,
+    "name": "Senior Project I",
+    "category": "Training",
+    "creditHours": 2,
+    "prerequisites": []
+},
+
+
+{
+    "code": "CSCI496",
+    "year": 4,
+    "semester": 2,
+    "name": "Senior Project II",
+    "category": "Training",
+    "creditHours": 2,
+    "prerequisites": ["CSCI495"]
+},
+
+
+{
+    "code": "HUMA101",
+    "year": 1,
+    "semester": 2,
+    "name": "Intro.to Logic& Critical Thinking",
+    "category": "Humanities",
+    "creditHours": 2,
+    "prerequisites": []
+},
+{
+    "code": "HUMA102",
+    "year": 1,
+    "semester": 1,
+    "name": "Introduction to Ethics",
+    "category": "Humanities",
+    "creditHours": 1,
+    "prerequisites": []
+}
+,
+
+{
+    "code": "ARTS201",
+    "year": 2,
+    "semester": 1,
+    "name": "Introduction to Photography",
+    "category": "ARTS",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "ARTS205",
+    "year": 2,
+    "semester": 1,
+    "name": "Music Theory",
+    "category": "ARTS",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+
+{
+    "code": "HUMA103",
+    "year": 2,
+    "semester": 1,
+    "name": "Selected Topics in Humanities & Arts",
+    "category": "ARTS",
+    "creditHours": 3,
+    "prerequisites": []
+}
+
+,
+{
+    "code": "SSCI101",
+    "year": 3,
+    "semester": 2,
+    "name": "S.T.in Egyptian & Arab Heritage",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+
+{
+    "code": "SSCI102",
+    "year": 3,
+    "semester": 2,
+    "name": "S.T.in World Cultures & Diversity",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+
+{
+    "code": "SSCI103",
+    "year": 3,
+    "semester": 1,
+    "name": "Project Manegment",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "NSCI 102",
+    "year": 4,
+    "semester": 1,
+    "name": "Selected Topics in Natural Sciences",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+{
+    "code": "xxxx",
+    "year": 4,
+    "semester": 2,
+    "name": "Elective HUMA, SSCI or NSCI",
+    "category": "Social Sciences",
+    "creditHours": 3,
+    "prerequisites": []
+},
+
+
+
+
+
+{
+    "code": "CSCI461",
+    "year": 3,
+    "semester": 2,
+    "name": "Introduction to Big Data",
+    "category": "Big_Data",
+    "creditHours": 3,
+    "prerequisites": ["CSCI208"]
+},
+{
+    "code": "CSCI467",
+    "year": 4,
+    "semester": 2,
+    "name": "Data Mining Analytics",
+    "category": "Big_Data",
+    "creditHours": 3,
+    "prerequisites": ["CSCI305", "CSCI322"]
+},
+{
+    "code": "CSCI467",
+    "year": 4,
+    "semester": 2,
+    "name": "Computational Intelligence",
+    "category": "Big_Data_Electives",
+    "creditHours": 3,
+    "prerequisites": ["CSCI417"]
+}
+,
+{
+    "code": "CSCI464",
+    "year": 4,
+    "semester": 2,
+    "name": "Numerical Methods & Math Precision",
+    "category": "Big_Data_Electives",
+    "creditHours": 3,
+    "prerequisites": ["CSCI208"]
+}
+,
+{
+    "code": "CSCI465",
+    "year": 4,
+    "semester": 2,
+    "name": "Introduction to Parallel Computing",
+    "category": "Big_Data_Electives",
+    "creditHours": 3,
+    "prerequisites": ["CSCI419"]
+},
+{
+    "code": "CSCI451",
+    "year": 3,
+    "semester": 2,
+    "name": "Digital Image Processing",
+    "category": "Media",
+    "creditHours": 3,
+    "prerequisites": ["CSCI208"]
+},
+{
+
+    "code": "CSCI452",
+    "year": 4,
+    "semester": 1,
+    "name": "3D Computer Graphics Visualization",
+    "category": "Media",
+    "creditHours": 3,
+    "prerequisites": ["CSCI451"]
+}
+,
+{
+
+    "code": "CSCI457",
+    "year": 4,
+    "semester": 2,
+    "name": "Mixed and Augmented Reality",
+    "category": "Media_Electives",
+    "creditHours": 3,
+    "prerequisites": ["CSCI452"]
+},
+{
+
+
+    "code": "CSCI455",
+    "year": 4,
+    "semester": 2,
+    "name": "Computer Vision Systems",
+    "category": "Media_Electives",
+    "creditHours": 3,
+    "prerequisites": ["CSCI452"]
+},
+{
+
+
+
+
+    "code": "CSCI456",
+    "year": 4,
+    "semester": 2,
+    "name": "Interactive Multimedia Systems",
+    "category": "Media_Electives",
+    "creditHours": 3,
+    "prerequisites": ["CSCI452"]
+},
+{
+    "code": "CSCI458",
+    "year": 4,
+    "semester": 2,
+    "name": "Serious Computer Games",
+    "category": "Media_Electives",
+    "creditHours": 3,
+    "prerequisites": ["CSCI452"]
+}
+
+
+
+
+]
+
+

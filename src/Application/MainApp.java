@@ -53,7 +53,7 @@ public class MainApp {
         Student student = new Student(id, name, gpa, semester, completed, year);
 
         // 🔹 3. Run AdvisorService
-        AdvisorService advisor = new AdvisorService(courses);
+        AdvisorService_AI advisor = new AdvisorService_AI(courses);
         List<Course> available = advisor.getAvailableCourses(student);
 
         // 🔹 4. Print result

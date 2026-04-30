@@ -2,10 +2,10 @@
 {
     "code": "MATH100",
     "year": 1,
-    "semester": 0,
+    "semester": 1,
     "name": "Pre-calculus",
     "category": "MATH",
-    "creditHours": 3,
+    "creditHours": 0,
     "prerequisites": []
 },
 {
@@ -69,7 +69,7 @@
     "name": "Physics I",
     "category": "PHYSICS",
     "creditHours": 3,
-    "prerequisites": ["MATH111i"]
+    "prerequisites": ["MATH100|MATH111i"]
 },
 {
     "code": "CSCI101",
@@ -134,6 +134,7 @@
     "creditHours": 3,
     "prerequisites": ["ECEN101C"]
 },
+
 {
     "code": "CSCI217",
     "year": 2,
@@ -289,25 +290,14 @@
     "prerequisites": []
 },
 
-{
-    "code": "COMM401",
-    "year": 2,
-    "semester": 2,
-    "name": "Internship & Service Learning",
-    "category": "Social Sciences",
-    "creditHours": 3,
-    "prerequisites": []
-},
 
-{
-    "code": "PSCI201",
-    "year": 1,
-    "semester": 2,
-    "name": "Introduction to political science",
-    "category": "Social Sciences",
-    "creditHours": 3,
-    "prerequisites": []
-},
+
+
+
+
+
+
+
 
 {
     "code": "PSYC201",
@@ -324,16 +314,6 @@
     "year": 1,
     "semester": 2,
     "name": "Theories of Personalities",
-    "category": "Social Sciences",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "SPAN101",
-    "year": 2,
-    "semester": 2,
-    "name": "Introduction to Spanish Language",
     "category": "Social Sciences",
     "creditHours": 2,
     "prerequisites": []
@@ -402,7 +382,7 @@
 {
     "code": "CSCI364",
     "year": 3,
-    "semester": 0,
+    "semester": 1,
     "name": "Programming Numerical Methods",
     "category": "CS_ELECTIVES",
     "creditHours": 3,
@@ -412,7 +392,7 @@
 {
     "code": "CSCI322",
     "year": 3,
-    "semester": 0,
+    "semester": 1,
     "name": "Data Analysis",
     "category": "CS_ELECTIVES",
     "creditHours": 3,
@@ -422,7 +402,7 @@
 {
     "code": "CSCI313",
     "year": 3,
-    "semester": 0,
+    "semester": 1,
     "name": "Software Engineering",
     "category": "CS_ELECTIVES",
     "creditHours": 3,
@@ -432,7 +412,7 @@
 {
     "code": "CSCI415",
     "year": 3,
-    "semester": 0,
+    "semester": 2,
     "name": "Compiler Design",
     "category": "CS_ELECTIVES",
     "creditHours": 3,
@@ -442,7 +422,7 @@
 {
     "code": "CSCI304",
     "year": 3,
-    "semester": 0,
+    "semester": 2,
     "name": "System Analysis and Design",
     "category": "CS_ELECTIVES",
     "creditHours": 3,
@@ -542,9 +522,9 @@
 {
     "code": "AIS412",
     "year": 4,
-    "semester": 0,
+    "semester": 1,
     "name": "Deep Learning",
-    "category": "AI_ELECTIVES",
+    "category": "AI_CORE",
     "creditHours": 3,
     "prerequisites": ["AIS302"]
 },
@@ -552,9 +532,9 @@
 {
     "code": "AIS421",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "NLP Applications",
-    "category": "AI_ELECTIVES",
+    "category": "AI_CORE",
     "creditHours": 3,
     "prerequisites": ["AIS411"]
 },
@@ -562,7 +542,7 @@
 {
     "code": "AIS431",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Intelligent Decision Support Systems",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -572,7 +552,7 @@
 {
     "code": "AIS455",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Computer Vision",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -582,7 +562,7 @@
 {
     "code": "AIS462",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Computational Intelligence",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -593,7 +573,7 @@
 {
     "code": "AIS463",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Knowledge Based Systems",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -603,7 +583,7 @@
 {
     "code": "AIS477",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "S.T. in Artificial Intelligence",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -613,7 +593,7 @@
 {
     "code": "AIS480",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Expert Systems",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -623,7 +603,7 @@
 {
     "code": "CSCI465",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Introduction to Parallel Computing",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -633,7 +613,7 @@
 {
     "code": "CSCI469",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Selected Topics in Big Data and Data Science",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -643,7 +623,7 @@
 {
     "code": "CSCI478",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "High Performance Computing",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -653,7 +633,7 @@
 {
     "code": "CSCI479",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Selected Topics in Computer Science",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -663,7 +643,7 @@
 {
     "code": "CSCI481",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Real Time Operating Systems",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -673,7 +653,7 @@
 {
     "code": "CSCI482",
     "year": 4,
-    "semester": 0,
+    "semester": 2,
     "name": "Information and Cyber Security",
     "category": "AI_ELECTIVES",
     "creditHours": 3,
@@ -717,6 +697,6 @@
     "name": "Senior Project II",
     "category": "Training",
     "creditHours": 3,
-    "prerequisites": []
+    "prerequisites": ["AIS495"]
 }
 ]
