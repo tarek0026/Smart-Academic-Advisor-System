@@ -8,18 +8,23 @@ public class Student {
 
     private String id;
     private String name;
+    private String major;
+    private String track;
     private double gpa;
     private int currentSemester;
     private int year;
     private Set<String> completedCourses;
 
-    public Student(String id, String name, double gpa, int currentSemester, Set<String> completedCourses, int year) {
+    public Student(String id, String name, double gpa, int currentSemester, Set<String> completedCourses, int year,
+            String major,String track) {
         setId(id); // to make sure that id isnot null then initializate it else if null throw
                    // exception
         setName(name);
         setGpa(gpa);
         setSemester(currentSemester);
         setYear(year);
+        setMajor(major);
+        setTrack(track);
         // Create a new independent Set for the student
         // This prevents linking the internal data with the external input
         // (Encapsulation)
@@ -75,6 +80,49 @@ public class Student {
         }
     }
 
+    private void setMajor(String major) {
+        String normalizedMajor = normalize(major);
+
+        if (!normalizedMajor.equals("AI") && !normalizedMajor.equals("CS")) {
+            throw new IllegalArgumentException("Major must be AI or CS");
+        }
+
+        this.major = normalizedMajor;
+    }
+
+
+
+    private void setTrack(String track) {
+    if (track == null) {
+        throw new IllegalArgumentException("Track cannot be null");
+    }
+
+    if (major == null) {
+        throw new IllegalStateException("Major must be set before track");
+    }
+
+    String normalizedTrack = normalize(track);
+
+    if (major.equals("CS")) {
+        if (!normalizedTrack.equals("BIGDATA") &&
+            !normalizedTrack.equals("MEDIA") &&
+            !normalizedTrack.equals("GENERAL")) {
+
+            throw new IllegalArgumentException(
+                "CS track must be Big_Data, Media, or General"
+            );
+        }
+    } else if (major.equals("AI")) {
+        if (!normalizedTrack.equals("AI")) {
+            throw new IllegalArgumentException(
+                "AI major only allows AI track"
+            );
+        }
+    }
+
+    this.track = normalizedTrack;
+}
+
     // Getters
     public String getId() {
         return id;
@@ -108,7 +156,7 @@ public class Student {
 
     // Methods
 
-    private String normalize(String code) {
+    public String normalize(String code) {
         return code.trim().toUpperCase();
     }
 
@@ -140,13 +188,15 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", gpa=" + gpa +
-                ", year=" + year + 
-                ", currentSemester=" + currentSemester +
-                ", completedCourses=" + completedCourses +
-                '}';
-    }
+    return "Student{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", major='" + major + '\'' +
+            ", track='" + track + '\'' +
+            ", gpa=" + gpa +
+            ", year=" + year +
+            ", currentSemester=" + currentSemester +
+            ", completedCourses=" + completedCourses +
+            '}';
+}
 }

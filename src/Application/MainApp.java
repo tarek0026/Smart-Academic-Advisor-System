@@ -13,17 +13,19 @@ public class MainApp {
 
         Scanner scanner = new Scanner(System.in);
 
-        // 🔹 1. Load JSON
-        System.out.println(new java.io.File("../Data/AI_courses.json").exists());
-        LoadData loader = new LoadData();
-        List<Course> courses = loader.loadCourses("../Data/AI_courses.json");
-
         // 🔹 2. Take user input
-        System.out.print("Enter ID: ");
-        String id = scanner.nextLine();
 
         System.out.print("Enter Name: ");
         String name = scanner.nextLine();
+
+        System.out.print("Enter ID: ");
+        String id = scanner.nextLine();
+
+        System.out.print("Enter major: ");
+        String major = scanner.nextLine();
+
+        System.out.print("Enter track: ");
+        String track = scanner.nextLine();
 
         System.out.print("Enter GPA: ");
         double gpa = scanner.nextDouble();
@@ -35,6 +37,19 @@ public class MainApp {
         int year = scanner.nextInt();
 
         scanner.nextLine(); // fix buffer
+        String filePath;
+
+        if (major.equals("AI")) {
+            filePath = "../Data/AI_courses.json";
+        } else if (major.equals("CS")) {
+            filePath = "../Data/CS_courses.json";
+        } else {
+            throw new IllegalStateException("Unknown major: " + major);
+        }
+
+        // Load
+        LoadData loader = new LoadData();
+        List<Course> courses = loader.loadCourses(filePath);
 
         // 🔹 completed courses
         Set<String> completed = new HashSet<>();
@@ -44,17 +59,28 @@ public class MainApp {
         while (true) {
             String course = scanner.nextLine();
 
-            if (course.equalsIgnoreCase("done")) break;
+            if (course.equalsIgnoreCase("done"))
+                break;
 
             completed.add(course);
         }
 
         // create student
-        Student student = new Student(id, name, gpa, semester, completed, year);
+        Student student = new Student(id, name, gpa, semester, completed, year, major, track);
+        List<Course> available;
 
         // 🔹 3. Run AdvisorService
-        AdvisorService_AI advisor = new AdvisorService_AI(courses);
-        List<Course> available = advisor.getAvailableCourses(student);
+        if (major.equals("AI")) {
+            AdvisorService_AI advisor = new AdvisorService_AI(courses);
+            available = advisor.getAvailableCourses(student);
+
+        } else if (major.equals("CS")) {
+            AdvisorService_CS advisor = new AdvisorService_CS(courses);
+            available = advisor.getAvailableCourses(student);
+
+        } else {
+            throw new IllegalStateException("Unknown major: " + major);
+        }
 
         // 🔹 4. Print result
         System.out.println("\nAvailable Courses:");

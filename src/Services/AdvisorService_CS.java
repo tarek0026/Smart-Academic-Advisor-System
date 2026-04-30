@@ -62,7 +62,7 @@ public class AdvisorService_CS {
                 continue;
             }
             // handele problem calc1,pre calc
-            if (course.getCode().equals("MATH100") && student.hasCompleted("MATH111i")) {
+            if (course.getCode().equals("MATH100") && student.hasCompleted("MATH111")) {
                 continue;
             }
 
