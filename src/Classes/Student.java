@@ -8,11 +8,11 @@ public class Student {
 
     private String id;
     private String name;
+    private int year;
+    private int currentSemester;
     private String major;
     private String track;
     private double gpa;
-    private int currentSemester;
-    private int year;
     private Set<String> completedCourses;
 
     public Student(String id, String name, double gpa, int currentSemester, Set<String> completedCourses, int year,
@@ -141,7 +141,7 @@ public class Student {
     }
 
     public int getYear() {
-        return currentSemester;
+        return year;
     }
 
     // Return the completed courses as read-only set (user can view but cannot
@@ -157,12 +157,14 @@ public class Student {
     // Methods
 
     public String normalize(String code) {
-        return code.trim().toUpperCase();
+        if (code == null) return null;
+        String cleaned = code.trim().toUpperCase();
+        return cleaned.isEmpty() ? null : cleaned;
     }
 
     public void addCompletedCourse(String code) {
         String normalized = normalize(code);
-        if (normalized != null) {
+        if (normalized != null && !normalized.isEmpty()) {
             completedCourses.add(normalized);
         }
     }

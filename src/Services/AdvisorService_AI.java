@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AdvisorService_AI {
+public class AdvisorService_AI implements AdvisorService {
     
     private List<Course> allCourses;
     private Map<String, Integer> courseMinCredits = new HashMap<>();
@@ -19,10 +19,87 @@ public class AdvisorService_AI {
         courseMinCredits.put("AIS390", 60);// intern
         courseMinCredits.put("AIS490", 60);// intern
         courseMinCredits.put("AIS495", 88);// grad1
-        categoryLimits.put("Social Sciences", 2);
-        categoryLimits.put("Humanities", 2);
+        categoryLimits.put("SOCIAL SCIENCES", 2);
+        categoryLimits.put("HUMANITIES", 2);
         categoryLimits.put("CS_ELECTIVES", 2);
         categoryLimits.put("AI_ELECTIVES", 5);
+    }
+
+
+    private boolean isMustCourse(Course course, Student student) {
+
+        // Strong condition: unlocks MANY courses
+        if (course.getUnlocks().size() >= 3) {
+            return true;
+        }
+
+        // Medium: unlocks a course that is currently blocked
+        for (String unlock : course.getUnlocks()) {
+            if (!student.hasCompleted(unlock)) {
+                return true;
+            }
+        }
+
+        // Weak: early-year core courses
+        if (course.isCore() && course.getYear() <= student.getYear()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<String> recommendCourses(Student student) {
+
+        List<Course> available = getAvailableCourses(student);
+
+        List<Course> must = new ArrayList<>();
+        List<Course> advised = new ArrayList<>();
+        List<Course> journey = new ArrayList<>();
+
+        Map<String, Integer> completedByCat = getCompletedByCategory(student);
+
+        for (Course course : available) {
+
+            if (isMustCourse(course, student)) {
+                must.add(course);
+                continue;
+            }
+
+            if (course.isCore()) {
+                advised.add(course);
+                continue;
+            }
+
+            if (course.isElective() || course.isEnglish()) {
+
+                int taken = completedByCat.getOrDefault(course.getCategory(), 0);
+                int limit = categoryLimits.getOrDefault(course.getCategory(), Integer.MAX_VALUE);
+
+                if (taken < limit) {
+                    journey.add(course);
+                }
+            }
+        }
+
+    must.sort((a, b) -> b.getUnlocks().size() - a.getUnlocks().size());
+
+    advised.sort((a, b) -> a.getYear() - b.getYear());
+
+    journey.sort((a, b) -> a.getCreditHours() - b.getCreditHours());
+
+    return mergeWithLimitsCourses(must, advised, journey);
+}
+
+    private List<String> mergeWithLimitsCourses(List<Course> must, List<Course> advised, List<Course> journey) 
+    {
+        List<String> result = new ArrayList<>();
+
+        must.stream().limit(3).forEach(c -> result.add(c.getCode()));
+        advised.stream().limit(3).forEach(c -> result.add(c.getCode()));
+        journey.stream().limit(2).forEach(c -> result.add(c.getCode()));
+
+        return result;
     }
 
     // handle electives count number of each category
@@ -53,6 +130,7 @@ public class AdvisorService_AI {
     }
 
     // Main function
+    @Override
     public List<Course> getAvailableCourses(Student student) {
         List<Course> available = new ArrayList<>();
         Map<String, Integer> completedByCat = getCompletedByCategory(student);
@@ -64,7 +142,7 @@ public class AdvisorService_AI {
                 continue;
             }
             // handele problem calc1,pre calc
-            if (course.getCode().equals("MATH100") && student.hasCompleted("MATH111i")) {
+            if (course.getCode().equals("MATH100") && student.hasCompleted("MATH111I")) {
                 continue;
             }
 

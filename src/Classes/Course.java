@@ -1,7 +1,9 @@
 package Classes;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Course {
@@ -11,11 +13,12 @@ public class Course {
     private Set<String> prerequisites;
     private int year;
     private int semester;
-    private String category;
+    private String category;    
     private int creditHours;
+    private List<String> unlocks = new ArrayList<>();
 
     public Course(String code, String name, Set<String> prerequisites,
-            int year, int semester, int creditHours, String category) {
+            int year, int semester, int creditHours, String category, List<String> unlocks) {
 
         setCode(code);
         setName(name);
@@ -24,6 +27,41 @@ public class Course {
         setCreditHours(creditHours);
         setCategory(category);
         setPrerequisites(prerequisites);
+        setUnlocks(unlocks);
+    }
+
+
+    private static final Set<String> Electives = Set.of(
+        "HUMANITIES",
+        "SOCIAL_SCIENCES",
+        "CS_ELECTIVES",
+        "AI_ELECTIVES"
+    );
+
+    private static final Set<String> Cores = Set.of(
+        "MATH",
+        "CS_CORE",
+        "AI_CORE"
+    );
+
+    public boolean isElective()
+    {
+        return Electives.contains(category.toUpperCase());
+    }
+
+    public boolean isCore()
+    {
+        return Cores.contains(category.toUpperCase());
+    }
+
+    public boolean isEnglish()
+    {
+        return category.equalsIgnoreCase("English");
+    }
+
+    public boolean isTraining()
+    {
+        return category.equalsIgnoreCase("Training");
     }
 
     // 🔹 Setters (validation + assignment)
@@ -64,11 +102,16 @@ public class Course {
     }
 
     private void setCategory(String category) {
-        if (category == null || category.trim().isEmpty()) {
-            throw new IllegalArgumentException("Category cannot be empty");
-        }
-        this.category = category.trim();
+    if (category == null || category.trim().isEmpty()) {
+        throw new IllegalArgumentException("Category cannot be empty");
     }
+    this.category = category.trim().toUpperCase();
+}
+
+    private void setUnlocks(List<String> unlocks) {
+    this.unlocks = unlocks != null ? new ArrayList<>(unlocks) : new ArrayList<>();
+    }
+
 
     private void setPrerequisites(Set<String> prerequisites) {
         this.prerequisites = new HashSet<>();
@@ -126,6 +169,14 @@ public class Course {
     public Set<String> getPrerequisites() {
         return Collections.unmodifiableSet(prerequisites);
     }
+
+    public List<String> getUnlocks() {
+    if (unlocks == null) {
+        unlocks = new ArrayList<>();
+    }
+    return Collections.unmodifiableList(unlocks);
+}
+
 
 
     @Override

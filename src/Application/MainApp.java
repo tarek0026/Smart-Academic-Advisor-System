@@ -21,8 +21,8 @@ public class MainApp {
         System.out.print("Enter ID: ");
         String id = scanner.nextLine();
 
-        System.out.print("Enter major: ");
-        String major = scanner.nextLine();
+        System.out.print("Enter major (AI or CS): ");
+        String major = scanner.nextLine().trim().toUpperCase();
 
         System.out.print("Enter track: ");
         String track = scanner.nextLine();
@@ -62,35 +62,54 @@ public class MainApp {
             if (course.equalsIgnoreCase("done"))
                 break;
 
-            completed.add(course);
+            if (!course.trim().isEmpty()) 
+                completed.add(course.trim().toUpperCase());
+                
         }
 
         // create student
         Student student = new Student(id, name, gpa, semester, completed, year, major, track);
         List<Course> available;
+        List<String> recommendations;
 
         // 🔹 3. Run AdvisorService
-        if (major.equals("AI")) {
-            AdvisorService_AI advisor = new AdvisorService_AI(courses);
-            available = advisor.getAvailableCourses(student);
+        
+        AdvisorService advisor;
+        if (major.equals("AI"))
+            advisor = new AdvisorService_AI(courses);
 
-        } else if (major.equals("CS")) {
-            AdvisorService_CS advisor = new AdvisorService_CS(courses);
-            available = advisor.getAvailableCourses(student);
+        else if (major.equals("CS"))
+            advisor = new AdvisorService_CS(courses);
 
-        } else {
+        else
             throw new IllegalStateException("Unknown major: " + major);
-        }
+
+
+        available = advisor.getAvailableCourses(student);
+        recommendations = advisor.recommendCourses(student);
+
 
         // 🔹 4. Print result
         System.out.println("\nAvailable Courses:");
 
-        if (available.isEmpty()) {
-            System.out.println("No available courses.");
-        } else {
-            for (Course c : available) {
+        if (available.isEmpty()) 
+            System.out.println("No available courses."); 
+
+        else 
+        {
+            for (Course c : available) 
                 System.out.println(c.getCode() + " - " + c.getName());
-            }
+        }
+
+
+        System.out.println("\n\n\nRecommended Courses:");
+        if (recommendations.isEmpty())
+            System.out.println("No recommendations available.");
+
+        else 
+        {
+            for (String code : recommendations) 
+                System.out.println(code);
         }
 
         scanner.close();
