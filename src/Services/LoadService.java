@@ -2,15 +2,23 @@ package Services;
 
 public class LoadService {
 
-    public static int getMaxCourses(double gpa) {
-        if (gpa < 2.0) { return 3; }
-        else if (gpa < 3.2) { return 5; }
-        else { return 6; } 
+    public static int getMaxCreditHours(double gpa) {
+        if (gpa < 2.0) {
+            return 15;
+        } else if (gpa <= 3.0) {
+            return 19;
+        } else {
+            return 21;
+        }
     }
 
     public static String getLoadType(double gpa) {
-        if (gpa < 2.0) { return "Half Load"; }
-        else if (gpa < 3.2) { return "Normal Load"; }
-        else { return "Overload"; }
+        if (gpa < 2.0) {
+            return "Half Load";
+        } else if (gpa <= 3.0) {
+            return "Normal Load";
+        } else {
+            return "Overload";
+        }
     }
 }

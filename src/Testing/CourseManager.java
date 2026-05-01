@@ -163,11 +163,23 @@ public class CourseManager {
         result.addAll(current);
         result.addAll(others);
 
-        int max = Services.LoadService.getMaxCourses(student.getGpa());
+        if (result.isEmpty())
+            return new ArrayList<>();
 
-        if (result.isEmpty()) return new ArrayList<>();
+        int maxCH = Services.LoadService.getMaxCreditHours(student.getGpa());
 
-        return result.subList(0, Math.min(max, result.size()));
+        List<Course> finalList = new ArrayList<>();
+        int currentCH = 0;
+
+        for (Course c : result) {
+            if (currentCH + c.getCreditHours() <= maxCH) {
+                finalList.add(c);
+                currentCH += c.getCreditHours();
+            }
+        }
+
+        return finalList;
+
     }
 
     // Print all courses

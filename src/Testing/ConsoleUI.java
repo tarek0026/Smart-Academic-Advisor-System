@@ -1,6 +1,7 @@
 package Testing;
 
-import Classes.*;
+import Classes.Course;
+import Classes.Student;
 import Services.LoadService;
 
 import java.util.*;
