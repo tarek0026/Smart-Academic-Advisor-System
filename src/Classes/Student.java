@@ -124,6 +124,10 @@ public class Student {
         return id;
     }
 
+    public String getMajor() {
+        return major;
+    }   
+
     public String getName() {
         return name;
     }
