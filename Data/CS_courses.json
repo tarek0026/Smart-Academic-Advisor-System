@@ -138,14 +138,16 @@
     "prerequisites": ["CSCI207"]
 },
 {
-    "code": "CSCI212",
+    "code": "CSCI221",
     "year": 2,
     "semester": 1,
     "name": "Logic Design and Lab",
     "category": "CS_CORE",
     "creditHours": 4,
-    "prerequisites": ["ECEN101C"]
+    "prerequisites": ["PHYS101C"]
 },
+
+
 {
     "code": "CSCI217",
     "year": 2,
@@ -155,6 +157,7 @@
     "creditHours": 3,
     "prerequisites": ["CSCI207"]
 },
+
 {
     "code": "CSCI305",
     "year": 3,
@@ -202,6 +205,7 @@
     "creditHours": 3,
     "prerequisites": ["MATH201"]
 },
+
 {
     "code": "CSCI463",
     "year": 3,
@@ -221,6 +225,7 @@
     "creditHours": 3,
     "prerequisites": ["PHYS101C"]
 },
+
 {
     "code": "CSCI415",
     "year": 4,
@@ -283,12 +288,6 @@
     "creditHours": 3,
     "prerequisites": ["ENGL201"]
 },
-
-
-
-
-
-
 
 
 {
@@ -356,39 +355,19 @@
 ,
 
 {
-    "code": "ARTS201",
+    "code": "ARTSxxx",
     "year": 2,
     "semester": 1,
-    "name": "Introduction to Photography",
-    "category": "ARTS",
-    "creditHours": 3,
-    "prerequisites": []
-},
-{
-    "code": "ARTS205",
-    "year": 2,
-    "semester": 1,
-    "name": "Music Theory",
+    "name": "Selected Topics in Arts",
     "category": "ARTS",
     "creditHours": 3,
     "prerequisites": []
 },
 
 
-{
-    "code": "HUMA103",
-    "year": 2,
-    "semester": 1,
-    "name": "Selected Topics in Humanities & Arts",
-    "category": "ARTS",
-    "creditHours": 3,
-    "prerequisites": []
-}
-
-,
 {
     "code": "SSCI101",
-    "year": 3,
+    "year": 2,
     "semester": 2,
     "name": "S.T.in Egyptian & Arab Heritage",
     "category": "Social Sciences",
@@ -418,7 +397,7 @@
     "prerequisites": []
 },
 {
-    "code": "NSCI 102",
+    "code": "NSCI102",
     "year": 4,
     "semester": 1,
     "name": "Selected Topics in Natural Sciences",
@@ -435,7 +414,6 @@
     "creditHours": 3,
     "prerequisites": []
 },
-
 
 
 

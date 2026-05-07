@@ -4,7 +4,7 @@ public class LoadService {
 
     public static int getMaxCreditHours(double gpa) {
         if (gpa < 2.0) {
-            return 15;
+            return 12;
         } else if (gpa <= 3.0) {
             return 19;
         } else {

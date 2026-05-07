@@ -19,10 +19,8 @@ public class AdvisorService_AI {
         courseMinCredits.put("AIS390", 60);// intern
         courseMinCredits.put("AIS490", 60);// intern
         courseMinCredits.put("AIS495", 88);// grad1
-        categoryLimits.put("Social Sciences", 2);
-        categoryLimits.put("Humanities", 2);
         categoryLimits.put("CS_ELECTIVES", 2);
-        categoryLimits.put("AI_ELECTIVES", 5);
+        categoryLimits.put("AI_ELECTIVES", 6);
     }
 
     // handle electives count number of each category

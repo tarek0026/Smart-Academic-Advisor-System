@@ -230,61 +230,23 @@
     "prerequisites": []
 },
 
+
 {
-    "code": "ARTS105",
+    "code": "HUMAxxx",
     "year": 1,
     "semester": 1,
-    "name": "Music Appreciation",
+    "name": "HUMA Elective 1",
     "category": "Humanities",
     "creditHours": 2,
     "prerequisites": []
 },
 
+
 {
-    "code": "ARTS201",
+    "code": "HUMAxxx",
     "year": 1,
-    "semester": 1,
-    "name": "Introduction to Photography",
-    "category": "Humanities",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "ARTS205",
-    "year": 1,
-    "semester": 1,
-    "name": "Music Theory",
-    "category": "Humanities",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "HUMA001/101",
-    "year": 2,
-    "semester": 1,
-    "name": "Intro.to Scientific & Critical Thinking",
-    "category": "Humanities",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "HUMA002",
-    "year": 2,
-    "semester": 1,
-    "name": "Introduction to Ethics",
-    "category": "Humanities",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "HUMA003",
-    "year": 1,
-    "semester": 1,
-    "name": "Selected Topics in Humanities & Arts",
+    "semester": 2,
+    "name": "HUMA Elective 2",
     "category": "Humanities",
     "creditHours": 2,
     "prerequisites": []
@@ -292,92 +254,26 @@
 
 
 
-
-
-
-
-
-
+{
+    "code": "SSCIxxx",
+    "year": 2,
+    "semester": 1,
+    "name": "SSCI 1",
+    "category": "Social Sciences",
+    "creditHours": 2,
+    "prerequisites": []
+},
 
 {
-    "code": "PSYC201",
+    "code": "SCCIxxx",
     "year": 2,
     "semester": 2,
-    "name": "Introduction to Psychology",
+    "name": "SSCI 2",
     "category": "Social Sciences",
     "creditHours": 2,
     "prerequisites": []
 },
 
-{
-    "code": "PSYC203",
-    "year": 1,
-    "semester": 2,
-    "name": "Theories of Personalities",
-    "category": "Social Sciences",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "SSCI001",
-    "year": 2,
-    "semester": 2,
-    "name": "S.T.in Social Sciences",
-    "category": "Social Sciences",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "SSCI002",
-    "year": 1,
-    "semester": 2,
-    "name": "S.T.in World Cultures & Diversity",
-    "category": "Social Sciences",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "SSCI101",
-    "year": 2,
-    "semester": 2,
-    "name": "S.T.in Egyptian & Arab Heritage",
-    "category": "Social Sciences",
-    "creditHours": 3,
-    "prerequisites": []
-},
-
-{
-    "code": "SSCI102",
-    "year": 1,
-    "semester": 2,
-    "name": "S.T.in World Cultures & Diversity",
-    "category": "Social Sciences",
-    "creditHours": 3,
-    "prerequisites": []
-},
-
-{
-    "code": "SSCI103",
-    "year": 2,
-    "semester": 2,
-    "name": "Selected Topics in Social Sciences",
-    "category": "Social Sciences",
-    "creditHours": 2,
-    "prerequisites": []
-},
-
-{
-    "code": "SSCI201",
-    "year": 2,
-    "semester": 2,
-    "name": "Introduction to Sociology",
-    "category": "Social Sciences",
-    "creditHours": 2,
-    "prerequisites": []
-},
 
 {
     "code": "CSCI364",
@@ -524,7 +420,7 @@
     "year": 4,
     "semester": 1,
     "name": "Deep Learning",
-    "category": "AI_CORE",
+    "category": "AI_ELECTIVES",
     "creditHours": 3,
     "prerequisites": ["AIS302"]
 },
@@ -534,7 +430,7 @@
     "year": 4,
     "semester": 2,
     "name": "NLP Applications",
-    "category": "AI_CORE",
+    "category": "AI_ELECTIVES",
     "creditHours": 3,
     "prerequisites": ["AIS411"]
 },

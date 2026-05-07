@@ -7,20 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class AdvisorService_CS {
-    
+
     private List<Course> allCourses;
     private Map<String, Integer> courseMinCredits = new HashMap<>();
     private Map<String, Integer> categoryLimits = new HashMap<>();
-    //i have to handle big data,media
 
     public AdvisorService_CS(List<Course> courses) {
         this.allCourses = courses;
         courseMinCredits.put("COMM401", 60);// intern
         courseMinCredits.put("CSCI490", 60);// intern
         courseMinCredits.put("CSCI495", 95);// grad1
-        categoryLimits.put("ARTS", 1);
+        categoryLimits.put("Big_Data_Electives", 1); 
+        categoryLimits.put("Media_Electives", 1); 
+
     }
 
     // handle electives count number of each category
@@ -61,6 +61,22 @@ public class AdvisorService_CS {
             if (student.hasCompleted(course.getCode())) {
                 continue;
             }
+            if (student.getTrack().equals("BIGDATA") &&
+                    (course.getCategory().equals("Media") ||
+                            course.getCategory().equals("Media_Electives"))) {
+
+                continue;
+            }
+
+            if (student.getTrack().equals("MEDIA") &&
+                    (course.getCategory().equals("Big_Data") ||
+                            course.getCategory().equals("Big_Data_Electives"))) {
+
+                continue;
+            }
+
+
+
             // handele problem calc1,pre calc
             if (course.getCode().equals("MATH100") && student.hasCompleted("MATH111")) {
                 continue;
