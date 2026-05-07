@@ -7,9 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class AdvisorService_AI {
-    
+
     private List<Course> allCourses;
     private Map<String, Integer> courseMinCredits = new HashMap<>();
     private Map<String, Integer> categoryLimits = new HashMap<>();
@@ -61,6 +60,35 @@ public class AdvisorService_AI {
             if (student.hasCompleted(course.getCode())) {
                 continue;
             }
+
+            long humaCount = student.getCompletedCourses()
+                    .stream()
+                    .filter(c -> c.startsWith("HUMA"))
+                    .count();
+
+            if (course.getCode().equals("HUMAxxx1") && humaCount >= 1) {
+                continue;
+            }
+
+            if (course.getCode().equals("HUMAxxx2") && humaCount >= 2) {
+                continue;
+            }
+
+            long ssciCount = student.getCompletedCourses()
+                    .stream()
+                    .filter(c -> c.startsWith("SSCI"))
+                    .count();
+
+            if (course.getCode().equals("SSCIxxx1") && ssciCount >= 1) {
+                continue;
+            }
+
+            if (course.getCode().equals("SSCIxxx2") && ssciCount >= 2) {
+                continue;
+            }
+
+            
+
             // handele problem calc1,pre calc
             if (course.getCode().equals("MATH100") && student.hasCompleted("MATH111i")) {
                 continue;

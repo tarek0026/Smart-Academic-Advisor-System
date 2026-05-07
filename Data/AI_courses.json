@@ -231,8 +231,9 @@
 },
 
 
+
 {
-    "code": "HUMAxxx",
+    "code": "HUMAxxx1",
     "year": 1,
     "semester": 1,
     "name": "HUMA Elective 1",
@@ -243,7 +244,7 @@
 
 
 {
-    "code": "HUMAxxx",
+    "code": "HUMAxxx2",
     "year": 1,
     "semester": 2,
     "name": "HUMA Elective 2",
@@ -255,7 +256,7 @@
 
 
 {
-    "code": "SSCIxxx",
+    "code": "SSCIxxx1",
     "year": 2,
     "semester": 1,
     "name": "SSCI 1",
@@ -265,7 +266,7 @@
 },
 
 {
-    "code": "SCCIxxx",
+    "code": "SSCIxxx2",
     "year": 2,
     "semester": 2,
     "name": "SSCI 2",
@@ -273,6 +274,9 @@
     "creditHours": 2,
     "prerequisites": []
 },
+
+
+
 
 
 {

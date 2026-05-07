@@ -18,9 +18,8 @@ public class AdvisorService_CS {
         courseMinCredits.put("COMM401", 60);// intern
         courseMinCredits.put("CSCI490", 60);// intern
         courseMinCredits.put("CSCI495", 95);// grad1
-        categoryLimits.put("Big_Data_Electives", 1); 
-        categoryLimits.put("Media_Electives", 1); 
-
+        categoryLimits.put("Big_Data_Electives", 1);
+        categoryLimits.put("Media_Electives", 1);
     }
 
     // handle electives count number of each category
@@ -61,6 +60,11 @@ public class AdvisorService_CS {
             if (student.hasCompleted(course.getCode())) {
                 continue;
             }
+            if (course.getCode().startsWith("ARTS") &&
+                    student.getCompletedCourses().stream().anyMatch(c -> c.startsWith("ARTS"))) {
+                continue;
+            }
+
             if (student.getTrack().equals("BIGDATA") &&
                     (course.getCategory().equals("Media") ||
                             course.getCategory().equals("Media_Electives"))) {
@@ -74,8 +78,6 @@ public class AdvisorService_CS {
 
                 continue;
             }
-
-
 
             // handele problem calc1,pre calc
             if (course.getCode().equals("MATH100") && student.hasCompleted("MATH111")) {
