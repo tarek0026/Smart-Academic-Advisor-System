@@ -307,7 +307,7 @@
     "name": "Industrial/Research Training",
     "category": "Training",
     "creditHours": 2,
-    "prerequisites": []
+    "prerequisites": ["COMM401"]
 },
 
 

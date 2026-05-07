@@ -128,6 +128,10 @@ public class Student {
         return name;
     }
 
+    public String getMajor() {
+        return major;
+    }
+
     public double getGpa() {
         return gpa;
     }
@@ -137,7 +141,7 @@ public class Student {
     }
 
     public int getYear() {
-        return currentSemester;
+        return year;
     }
 
     public String getTrack() {

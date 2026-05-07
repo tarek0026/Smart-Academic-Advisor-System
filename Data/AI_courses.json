@@ -226,7 +226,7 @@
     "semester": 2,
     "name": "Communication and Presentation Skills",
     "category": "English",
-    "creditHours": 0,
+    "creditHours": 3,
     "prerequisites": []
 },
 
@@ -577,7 +577,7 @@
     "name": "Industrial/Research Training II",
     "category": "Training",
     "creditHours": 2,
-    "prerequisites": []
+    "prerequisites": ["AIS390"]
 },
 
 {
