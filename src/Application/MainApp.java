@@ -4,7 +4,13 @@ import Classes.*;
 import Services.*;
 import java.util.*;
 
+//how to run first you have to write inside terminal   cd Smart-Academic-Advisor-System
+//then    cd src
+//then compile
+
 // javac -cp ".;../lib/gson-2.10.1.jar" Application/MainApp.java
+// then run 
+
 // java -cp ".;../lib/gson-2.10.1.jar" Application.MainApp
 
 public class MainApp {
