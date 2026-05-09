@@ -7,7 +7,7 @@ public class TestStudent {
     public static void main(String[] args) {
 
         // create student
-        Student s = new Student("241001750","Tarek",4,1,Set.of(" cs101 ", "cS102"),2);
+        Student s = new Student("241001750","Tarek",4,1,Set.of(" cs101 ", "cS102"),2, "cs", "general");
 
         // print student
         System.out.println(s);

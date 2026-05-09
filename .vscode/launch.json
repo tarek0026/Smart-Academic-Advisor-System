@@ -3,10 +3,22 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Testing.Main"
+    },
+    {
+      "type": "java",
+      "name": "MainApp",
+      "request": "launch",
+      "mainClass": "Application.MainApp"
+    },
+    {
+      "type": "java",
       "name": "Launch JavaFX GUI",
       "request": "launch",
       "mainClass": "Application.GUI_App",
-      "vmArgs": "--module-path \"D:/javafx-sdk-17.0.19/lib\" --add-modules javafx.controls,javafx.fxml"
+      "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-17.0.19/lib\" --add-modules javafx.controls,javafx.fxml,javafx.graphics"
     }
   ]
 }

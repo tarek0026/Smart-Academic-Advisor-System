@@ -21,7 +21,9 @@ public class Main {
                 2.8,
                 2,
                 completed,
-                1);
+                1,
+                "cs",
+                "general");
 
         System.out.println("\nLoad Type: " + Services.LoadService.getLoadType(student.getGpa()));
 

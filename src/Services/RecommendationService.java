@@ -395,6 +395,3 @@ public class RecommendationService {
         return score;
     }
 }
-
-
-
