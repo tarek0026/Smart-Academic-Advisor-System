@@ -1,5 +1,27 @@
 {
   "java.project.referencedLibraries": [
-    "lib/**/*.jar"
+    "lib/**/*.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.base.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.controls.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.fxml.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.graphics.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.media.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.swing.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.web.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx-swt.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\jdk.jsobject.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\jfx.incubator.input.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\jfx.incubator.richtext.jar",
+    "c:\\Gson\\gson-2.9.1.jar",
+    "c:\\Gson\\gson-2.9.1-javadoc.jar",
+    "c:\\Gson\\gson-2.9.1-sources.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.base.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.controls.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.fxml.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.graphics.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.media.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.swing.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx.web.jar",
+    "c:\\JavaFX\\javafx-sdk-17.0.19\\lib\\javafx-swt.jar"
   ]
 }
