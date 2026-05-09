@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.*;
+
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
@@ -37,8 +38,8 @@ public class GUI_App extends Application {
     private static final String D_DANGER  = "#F85149";
     private static final String D_GOLD    = "#D29922";
     private static final String D_BTNHOV  = "#5299e0";
-    private static final String D_FONT1   = "Courier New";
-    private static final String D_FONT2   = "Trebuchet MS";
+    private static final String D_FONT1   = "Georgia";
+    private static final String D_FONT2   = "Palatino Linotype";
 
     // ─── LIGHT PALETTE ────────────────────────────────────────────────────────
     private static final String L_BG      = "#F5EDE3";
