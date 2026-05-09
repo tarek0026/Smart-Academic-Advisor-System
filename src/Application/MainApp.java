@@ -143,11 +143,11 @@ public class MainApp {
 
         if (major.equals("AI")) {
 
-            filePath = "../Data/AI_courses.json";
+            filePath = "Data/AI_courses.json";
 
         } else {
 
-            filePath = "../Data/CS_courses.json";
+            filePath = "Data/CS_courses.json";
         }
 
         LoadData loader = new LoadData();
