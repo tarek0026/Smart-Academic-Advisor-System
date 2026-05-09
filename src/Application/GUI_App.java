@@ -3,7 +3,6 @@ package Application;
 import Classes.Course;
 import Classes.Student;
 import Services.*;
-
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.*;
@@ -18,6 +17,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.*;
+
+import javafx.scene.Node;
+import javafx.scene.layout.Region;
 
 public class GUI_App extends Application {
 
@@ -374,7 +376,7 @@ public class GUI_App extends Application {
         Label sub   = subLabel("Check every course you have already passed.");
         headerBox.getChildren().addAll(title, sub);
         content.getChildren().add(headerBox);
-
+    
         // Scrollable checklist area
         VBox listContainer = new VBox(18);
         listContainer.setPadding(new Insets(10, 40, 20, 40));
@@ -738,11 +740,13 @@ public class GUI_App extends Application {
     //  DATA HELPERS
     // ══════════════════════════════════════════════════════════════════════════
     private void loadCoursesForMajor() {
-        String major = ((RadioButton) majorGroup.getSelectedToggle()).getUserData().toString();
-        String path  = major.equals("AI") ? "C:/Users/HP/Downloads/Abdalla/College/Advanced Programming/Project/Smart-Academic-Advisor-System - Copy/Data/AI_courses.json" : "C:/Users/HP/Downloads/Abdalla/College/Advanced Programming/Project/Smart-Academic-Advisor-System - Copy/Data/CS_courses.json";
-        LoadData loader = new LoadData();
-        allCourses = loader.loadCourses(path);
-    }
+     if (majorGroup.getSelectedToggle() != null) {
+         String major = ((RadioButton) majorGroup.getSelectedToggle()).getUserData().toString();
+         String path = major.equals("AI") ? "Data/AI_courses.json" : "Data/CS_courses.json";
+         LoadData loader = new LoadData();
+         allCourses = loader.loadCourses(path);
+     }
+ }
 
     private List<Course> getCoursesForSemester(int year, int semester) {
         List<Course> result = new ArrayList<>();
