@@ -147,6 +147,7 @@ public class Student {
     public String getTrack() {
         return track;
     }
+    
 
     // Return the completed courses as read-only set (user can view but cannot
     // modify it)
@@ -179,7 +180,7 @@ public class Student {
 
     public boolean hasCompleted(String code) {
         String normalized = normalize(code);
-        return normalized != null && completedCourses.contains(normalized);// is this subject from the subjects user
+        return normalized != null && completedCourses.contains(normalized);// is t,zhis subject from the subjects user
                                                                            // took
     }
 
