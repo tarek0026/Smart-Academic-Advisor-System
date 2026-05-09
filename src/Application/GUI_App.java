@@ -17,49 +17,71 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.*;
-
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 public class GUI_App extends Application {
 
-    // ─── PALETTE ──────────────────────────────────────────────────────────────
-    private static final String BG        = "#0D1117";
-    private static final String SURFACE   = "#161B22";
-    private static final String CARD      = "#1C2128";
-    private static final String BORDER    = "#30363D";
-    private static final String ACCENT    = "#2EA043";
-    private static final String ACCENT2   = "#388BFD";
-    private static final String TEXT_PRI  = "#E6EDF3";
-    private static final String TEXT_SEC  = "#8B949E";
-    private static final String DANGER    = "#F85149";
-    private static final String GOLD      = "#D29922";
+    // ─── THEME FLAG ───────────────────────────────────────────────────────────
+    private boolean darkMode = true;   // starts in dark mode
+
+    // ─── DARK PALETTE ─────────────────────────────────────────────────────────
+    private static final String D_BG      = "#0D1117";
+    private static final String D_SURFACE = "#161B22";
+    private static final String D_CARD    = "#1C2128";
+    private static final String D_BORDER  = "#30363D";
+    private static final String D_ACCENT  = "#2EA043";
+    private static final String D_ACCENT2 = "#388BFD";
+    private static final String D_TPRI    = "#E6EDF3";
+    private static final String D_TSEC    = "#8B949E";
+    private static final String D_DANGER  = "#F85149";
+    private static final String D_GOLD    = "#D29922";
+    private static final String D_BTNHOV  = "#5299e0";
+    private static final String D_FONT1   = "Courier New";
+    private static final String D_FONT2   = "Trebuchet MS";
+
+    // ─── LIGHT PALETTE ────────────────────────────────────────────────────────
+    private static final String L_BG      = "#F5EDE3";
+    private static final String L_SURFACE = "#EDE0D4";
+    private static final String L_CARD    = "#FDF7F2";
+    private static final String L_BORDER  = "#D4B8A8";
+    private static final String L_ACCENT  = "#7C4F3A";
+    private static final String L_ACCENT2 = "#B5614A";
+    private static final String L_TPRI    = "#2E1A0E";
+    private static final String L_TSEC    = "#7A5C4F";
+    private static final String L_DANGER  = "#C0392B";
+    private static final String L_GOLD    = "#A0612A";
+    private static final String L_BTNHOV  = "#C97058";
+    private static final String L_FONT1   = "Georgia";
+    private static final String L_FONT2   = "Palatino Linotype";
+
+    // ─── ACTIVE THEME GETTERS ─────────────────────────────────────────────────
+    private String BG()     { return darkMode ? D_BG      : L_BG;      }
+    private String SURF()   { return darkMode ? D_SURFACE : L_SURFACE; }
+    private String CARD()   { return darkMode ? D_CARD    : L_CARD;    }
+    private String BORD()   { return darkMode ? D_BORDER  : L_BORDER;  }
+    private String ACC()    { return darkMode ? D_ACCENT  : L_ACCENT;  }
+    private String ACC2()   { return darkMode ? D_ACCENT2 : L_ACCENT2; }
+    private String TPRI()   { return darkMode ? D_TPRI    : L_TPRI;    }
+    private String TSEC()   { return darkMode ? D_TSEC    : L_TSEC;    }
+    private String DNG()    { return darkMode ? D_DANGER  : L_DANGER;  }
+    private String GLD()    { return darkMode ? D_GOLD    : L_GOLD;    }
+    private String BHOV()   { return darkMode ? D_BTNHOV  : L_BTNHOV;  }
+    private String F1()     { return darkMode ? D_FONT1   : L_FONT1;   }
+    private String F2()     { return darkMode ? D_FONT2   : L_FONT2;   }
 
     // ─── STATE ────────────────────────────────────────────────────────────────
-    private Stage primaryStage;
-
-    // Step 1 fields
-    private TextField nameField = new TextField();
-    private TextField idField   = new TextField();
-
-    // Step 2 fields
-    private ToggleGroup majorGroup  = new ToggleGroup();
-    private ToggleGroup trackGroup  = new ToggleGroup();
-
-    // Step 3 fields
-    private TextField gpaField = new TextField();
-
-    // Step 4 fields
+    private Stage       primaryStage;
+    private int         currentStep   = 0;
+    private TextField   nameField     = new TextField();
+    private TextField   idField       = new TextField();
+    private TextField   gpaField      = new TextField();
+    private ToggleGroup majorGroup    = new ToggleGroup();
+    private ToggleGroup trackGroup    = new ToggleGroup();
     private ToggleGroup yearGroup     = new ToggleGroup();
     private ToggleGroup semesterGroup = new ToggleGroup();
-
-    // Step 5 checkboxes: map from (year, semester) label → list of (Course, CheckBox)
-    private List<Course>    allCourses   = new ArrayList<>();
-    private Set<String>     checkedCodes = new LinkedHashSet<>();
-
-    // Current step tracking for progress bar
-    private int currentStep = 0;
-    private Label[] stepLabels = new Label[5];
+    private List<Course> allCourses   = new ArrayList<>();
+    private Set<String>  checkedCodes = new LinkedHashSet<>();
 
     // ─── ENTRY POINT ──────────────────────────────────────────────────────────
     @Override
@@ -73,36 +95,51 @@ public class GUI_App extends Application {
         stage.show();
     }
 
+    // Redraws whichever step is currently showing with the new theme colors
+    private void applyTheme() {
+        switch (currentStep) {
+            case 0 -> showStep1();
+            case 1 -> showStep2();
+            case 2 -> showStep3();
+            case 3 -> showStep4();
+            case 4 -> showStep5();
+        }
+    }
+
     // ══════════════════════════════════════════════════════════════════════════
-    //  CHROME – shared outer shell
+    //  CHROME – shared outer shell with theme-toggle button in header
     // ══════════════════════════════════════════════════════════════════════════
     private BorderPane buildShell(Node content, int step) {
         currentStep = step;
 
         BorderPane shell = new BorderPane();
-        shell.setStyle("-fx-background-color: " + BG + ";");
+        shell.setStyle("-fx-background-color: " + BG() + ";");
 
-        // ── Top header bar
+        // Header bar
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
         header.setPadding(new Insets(18, 30, 18, 30));
-        header.setStyle("-fx-background-color: " + SURFACE + ";"
-                + "-fx-border-color: " + BORDER + "; -fx-border-width: 0 0 1 0;");
+        header.setStyle("-fx-background-color: " + SURF() + ";"
+                + "-fx-border-color: " + BORD() + "; -fx-border-width: 0 0 1 0;");
 
         Label logo = new Label("◈ ACADEMIC ADVISOR");
-        logo.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
-        logo.setTextFill(Color.web(ACCENT));
+        logo.setFont(Font.font(F1(), FontWeight.BOLD, 15));
+        logo.setTextFill(Color.web(ACC()));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
+        // ── Theme toggle
+        Button themeBtn = makeThemeBtn();
+        themeBtn.setOnAction(e -> { darkMode = !darkMode; applyTheme(); });
+
         Label stepCounter = new Label("STEP " + (step + 1) + " / 5");
-        stepCounter.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
-        stepCounter.setTextFill(Color.web(TEXT_SEC));
+        stepCounter.setFont(Font.font(F1(), FontWeight.BOLD, 12));
+        stepCounter.setTextFill(Color.web(TSEC()));
 
-        header.getChildren().addAll(logo, spacer, stepCounter);
+        header.getChildren().addAll(logo, spacer, themeBtn, new Label("   "), stepCounter);
 
-        // ── Progress dots
+        // Progress dots
         HBox progress = new HBox(12);
         progress.setAlignment(Pos.CENTER);
         progress.setPadding(new Insets(16, 30, 8, 30));
@@ -112,11 +149,9 @@ public class GUI_App extends Application {
             dot.setAlignment(Pos.CENTER);
             Circle c = new Circle(7);
             if (i < step) {
-                c.setFill(Color.web(ACCENT));
-                c.setStroke(Color.web(ACCENT));
+                c.setFill(Color.web(ACC())); c.setStroke(Color.web(ACC()));
             } else if (i == step) {
-                c.setFill(Color.web(ACCENT2));
-                c.setStroke(Color.web(ACCENT2));
+                c.setFill(Color.web(ACC2())); c.setStroke(Color.web(ACC2()));
                 ScaleTransition pulse = new ScaleTransition(Duration.millis(900), c);
                 pulse.setFromX(1); pulse.setToX(1.3);
                 pulse.setFromY(1); pulse.setToY(1.3);
@@ -124,28 +159,36 @@ public class GUI_App extends Application {
                 pulse.setCycleCount(Animation.INDEFINITE);
                 pulse.play();
             } else {
-                c.setFill(Color.web(SURFACE));
-                c.setStroke(Color.web(BORDER));
-                c.setStrokeWidth(1.5);
+                c.setFill(Color.web(SURF())); c.setStroke(Color.web(BORD())); c.setStrokeWidth(1.5);
             }
             Label name = new Label(stepNames[i]);
-            name.setFont(Font.font("Courier New", 9));
-            name.setTextFill(i == step ? Color.web(ACCENT2) : Color.web(TEXT_SEC));
+            name.setFont(Font.font(F1(), 9));
+            name.setTextFill(i == step ? Color.web(ACC2()) : Color.web(TSEC()));
             dot.getChildren().addAll(c, name);
             progress.getChildren().add(dot);
-
             if (i < 4) {
                 Rectangle line = new Rectangle(40, 1);
-                line.setFill(i < step ? Color.web(ACCENT) : Color.web(BORDER));
+                line.setFill(i < step ? Color.web(ACC()) : Color.web(BORD()));
                 line.setTranslateY(-8);
                 progress.getChildren().add(line);
             }
         }
 
-        VBox top = new VBox(0, header, progress);
-        shell.setTop(top);
+        shell.setTop(new VBox(0, header, progress));
         shell.setCenter(content);
         return shell;
+    }
+
+    // Helper: creates the ☀/🌙 toggle button styled for current theme
+    private Button makeThemeBtn() {
+        Button b = new Button(darkMode ? "☀  Light Mode" : "🌙  Dark Mode");
+        b.setFont(Font.font(F1(), FontWeight.BOLD, 11));
+        b.setTextFill(Color.web(TSEC()));
+        String base = "-fx-border-radius: 6; -fx-padding: 5 12; -fx-cursor: hand;";
+        b.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + ";" + base);
+        b.setOnMouseEntered(e -> b.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + ACC2() + ";" + base));
+        b.setOnMouseExited(e  -> b.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + ";" + base));
+        return b;
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -155,12 +198,6 @@ public class GUI_App extends Application {
         VBox content = new VBox(28);
         content.setAlignment(Pos.CENTER);
         content.setPadding(new Insets(50, 120, 40, 120));
-
-        Label title = bigTitle("Who are you?");
-        Label sub   = subLabel("Enter your name and student ID to get started.");
-
-        VBox nameBox = labeledField("Full Name", nameField, "e.g. Ahmed Al-Rashidi");
-        VBox idBox   = labeledField("Student ID", idField, "e.g. 241001750");
 
         Button next = nextBtn("Continue →");
         next.setOnAction(e -> {
@@ -172,7 +209,13 @@ public class GUI_App extends Application {
             showStep2();
         });
 
-        content.getChildren().addAll(title, sub, nameBox, idBox, next);
+        content.getChildren().addAll(
+            bigTitle("Who are you?"),
+            subLabel("Enter your name and student ID to get started."),
+            labeledField("Full Name", nameField, "e.g. Mohammed Elneny"),
+            labeledField("Student ID", idField, "e.g. 241001750"),
+            next
+        );
         fadeIn(content);
         primaryStage.setScene(new Scene(buildShell(content, 0)));
     }
@@ -185,51 +228,39 @@ public class GUI_App extends Application {
         content.setAlignment(Pos.TOP_CENTER);
         content.setPadding(new Insets(40, 100, 40, 100));
 
-        Label title = bigTitle("Your Major");
-        Label sub   = subLabel("Select your department and specialization track.");
-
-        // Major selector (CS only for now — extend later)
-        Label majLabel = sectionLabel("MAJOR");
         HBox majorRow = new HBox(16);
         majorRow.setAlignment(Pos.CENTER);
-        String[] majors = {"CS", "AI"};
+        String[] majors    = {"CS", "AI"};
         String[] majorFull = {"Computer Science", "Artificial Intelligence"};
         for (int i = 0; i < majors.length; i++) {
             RadioButton rb = styledRadio(majors[i], majorFull[i], majorGroup);
             if (i == 0) rb.setSelected(true);
-            HBox.setHgrow(rb.getParent() == null ? new Region() : (Region) rb.getParent(), Priority.ALWAYS);
             majorRow.getChildren().add(wrapRadio(rb, majors[i], majorFull[i]));
         }
 
-        // Track selector
-        Label trackLabel = sectionLabel("TRACK");
-
         HBox trackRow = new HBox(12);
         trackRow.setAlignment(Pos.CENTER);
-
-        String[] csTracks = {"BIGDATA", "MEDIA", "GENERAL"};
+        String[] csTracks    = {"BIGDATA", "MEDIA", "GENERAL"};
         String[] csTrackFull = {"Big Data", "Media", "General"};
-        String[] aiTracks = {"AI"};
+        String[] aiTracks    = {"AI"};
         String[] aiTrackFull = {"AI Track"};
 
-        // Populate tracks based on selected major
         Runnable updateTracks = () -> {
             trackRow.getChildren().clear();
             trackGroup = new ToggleGroup();
-            String major = ((RadioButton) majorGroup.getSelectedToggle()).getUserData().toString();
-            String[] tracks = major.equals("AI") ? aiTracks : csTracks;
-            String[] fullNames = major.equals("AI") ? aiTrackFull : csTrackFull;
+            String major    = ((RadioButton) majorGroup.getSelectedToggle()).getUserData().toString();
+            String[] tracks = major.equals("AI") ? aiTracks    : csTracks;
+            String[] full   = major.equals("AI") ? aiTrackFull : csTrackFull;
             for (int i = 0; i < tracks.length; i++) {
                 RadioButton rb = new RadioButton();
                 rb.setUserData(tracks[i]);
                 rb.setToggleGroup(trackGroup);
                 if (i == 0) rb.setSelected(true);
-                trackRow.getChildren().add(wrapRadio(rb, tracks[i], fullNames[i]));
+                trackRow.getChildren().add(wrapRadio(rb, tracks[i], full[i]));
             }
         };
-
         majorGroup.selectedToggleProperty().addListener((o, old, nw) -> updateTracks.run());
-        updateTracks.run(); // initial
+        updateTracks.run();
 
         Button next = nextBtn("Continue →");
         Button back = backBtn();
@@ -238,8 +269,12 @@ public class GUI_App extends Application {
 
         HBox nav = new HBox(12, back, next);
         nav.setAlignment(Pos.CENTER);
-
-        content.getChildren().addAll(title, sub, majLabel, majorRow, trackLabel, trackRow, nav);
+        content.getChildren().addAll(
+            bigTitle("Your Major"),
+            subLabel("Select your department and specialization track."),
+            sectionLabel("MAJOR"), majorRow,
+            sectionLabel("TRACK"), trackRow, nav
+        );
         fadeIn(content);
         primaryStage.setScene(new Scene(buildShell(content, 1)));
     }
@@ -252,25 +287,19 @@ public class GUI_App extends Application {
         content.setAlignment(Pos.CENTER);
         content.setPadding(new Insets(50, 140, 40, 140));
 
-        Label title = bigTitle("Your GPA");
-        Label sub   = subLabel("Enter your current cumulative GPA (0.0 – 4.0).\nThis determines your course load capacity.");
-
-        VBox gpaBox = labeledField("GPA", gpaField, "e.g. 3.2");
-
-        // Dynamic GPA indicator
         Label indicator = new Label("─");
-        indicator.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
-        indicator.setTextFill(Color.web(TEXT_SEC));
+        indicator.setFont(Font.font(F1(), FontWeight.BOLD, 13));
+        indicator.setTextFill(Color.web(TSEC()));
 
         gpaField.textProperty().addListener((o, old, nw) -> {
             try {
                 double g = Double.parseDouble(nw);
-                if (g < 2.0)       { indicator.setText("⚠  Half Load  (max 12 CH)"); indicator.setTextFill(Color.web(DANGER)); }
-                else if (g <= 3.0) { indicator.setText("●  Normal Load  (max 19 CH)"); indicator.setTextFill(Color.web(GOLD)); }
-                else if (g <= 4.0) { indicator.setText("★  Overload  (max 21 CH)"); indicator.setTextFill(Color.web(ACCENT)); }
-                else               { indicator.setText("GPA > 4.0 ?"); indicator.setTextFill(Color.web(DANGER)); }
+                if      (g < 2.0)  { indicator.setText("⚠  Half Load  (max 12 CH)");   indicator.setTextFill(Color.web(DNG())); }
+                else if (g <= 3.0) { indicator.setText("●  Normal Load  (max 19 CH)"); indicator.setTextFill(Color.web(GLD())); }
+                else if (g <= 4.0) { indicator.setText("★  Overload  (max 21 CH)");    indicator.setTextFill(Color.web(ACC())); }
+                else               { indicator.setText("GPA > 4.0 ?");                 indicator.setTextFill(Color.web(DNG())); }
             } catch (NumberFormatException ex) {
-                indicator.setText("─"); indicator.setTextFill(Color.web(TEXT_SEC));
+                indicator.setText("─"); indicator.setTextFill(Color.web(TSEC()));
             }
         });
 
@@ -290,8 +319,12 @@ public class GUI_App extends Application {
 
         HBox nav = new HBox(12, back, next);
         nav.setAlignment(Pos.CENTER);
-
-        content.getChildren().addAll(title, sub, gpaBox, indicator, nav);
+        content.getChildren().addAll(
+            bigTitle("Your GPA"),
+            subLabel("Enter your current cumulative GPA (0.0 – 4.0).\nThis determines your course load capacity."),
+            labeledField("GPA", gpaField, "e.g. 3.2"),
+            indicator, nav
+        );
         fadeIn(content);
         primaryStage.setScene(new Scene(buildShell(content, 2)));
     }
@@ -304,10 +337,9 @@ public class GUI_App extends Application {
         content.setAlignment(Pos.CENTER);
         content.setPadding(new Insets(40, 100, 40, 100));
 
-        Label title = bigTitle("Academic Standing");
-        Label sub   = subLabel("Select your current year and semester.");
+        yearGroup     = new ToggleGroup();
+        semesterGroup = new ToggleGroup();
 
-        Label yearLabel = sectionLabel("ACADEMIC YEAR");
         HBox yearRow = new HBox(12);
         yearRow.setAlignment(Pos.CENTER);
         for (int i = 1; i <= 4; i++) {
@@ -318,7 +350,6 @@ public class GUI_App extends Application {
             yearRow.getChildren().add(wrapRadio(rb, "Year " + i, ordinal(i) + " Year"));
         }
 
-        Label semLabel = sectionLabel("SEMESTER");
         HBox semRow = new HBox(16);
         semRow.setAlignment(Pos.CENTER);
         String[] semLabels = {"1st Semester", "2nd Semester"};
@@ -333,15 +364,16 @@ public class GUI_App extends Application {
         Button next = nextBtn("Continue →");
         Button back = backBtn();
         back.setOnAction(e -> showStep3());
-        next.setOnAction(e -> {
-            loadCoursesForMajor();
-            showStep5();
-        });
+        next.setOnAction(e -> { loadCoursesForMajor(); showStep5(); });
 
         HBox nav = new HBox(12, back, next);
         nav.setAlignment(Pos.CENTER);
-
-        content.getChildren().addAll(title, sub, yearLabel, yearRow, semLabel, semRow, nav);
+        content.getChildren().addAll(
+            bigTitle("Academic Standing"),
+            subLabel("Select your current year and semester."),
+            sectionLabel("ACADEMIC YEAR"), yearRow,
+            sectionLabel("SEMESTER"), semRow, nav
+        );
         fadeIn(content);
         primaryStage.setScene(new Scene(buildShell(content, 3)));
     }
@@ -352,39 +384,29 @@ public class GUI_App extends Application {
     private void showStep5() {
         String yearStr = yearGroup.getSelectedToggle().getUserData().toString().replaceAll("[^0-9]", "");
         String semStr  = semesterGroup.getSelectedToggle().getUserData().toString().replaceAll("[^0-9]", "");
-
         int studentYear = Integer.parseInt(yearStr);
         int studentSem  = Integer.parseInt(semStr);
 
-        // Build list of (year, semester) pairs that come BEFORE student's current position
         List<int[]> pastSemesters = new ArrayList<>();
-        for (int y = 1; y <= studentYear; y++) {
-            for (int s = 1; s <= 2; s++) {
-                if (y == studentYear && s >= studentSem) break;
+        for (int y = 1; y <= 4; y++)
+            for (int s = 1; s <= 2; s++)
                 pastSemesters.add(new int[]{y, s});
-            }
-        }
 
-        // Outer layout
         VBox content = new VBox(0);
-        content.setStyle("-fx-background-color: " + BG + ";");
+        content.setStyle("-fx-background-color: " + BG() + ";");
 
-        // Top header inside content
-        VBox headerBox = new VBox(6);
-        headerBox.setPadding(new Insets(30, 40, 20, 40));
-        Label title = bigTitle("Completed Courses");
-        Label sub   = subLabel("Check every course you have already passed.");
-        headerBox.getChildren().addAll(title, sub);
-        content.getChildren().add(headerBox);
-    
-        // Scrollable checklist area
+        VBox hdrBox = new VBox(6);
+        hdrBox.setPadding(new Insets(30, 40, 20, 40));
+        hdrBox.getChildren().addAll(bigTitle("Completed Courses"), subLabel("Check every course you have already passed."));
+        content.getChildren().add(hdrBox);
+
         VBox listContainer = new VBox(18);
         listContainer.setPadding(new Insets(10, 40, 20, 40));
 
         if (pastSemesters.isEmpty()) {
-            Label none = new Label("No previous semesters — you are in Year 1, Semester 1.");
-            none.setTextFill(Color.web(TEXT_SEC));
-            none.setFont(Font.font("Courier New", 13));
+            Label none = new Label("No courses available to display.");
+            none.setTextFill(Color.web(TSEC()));
+            none.setFont(Font.font(F1(), 13));
             listContainer.getChildren().add(none);
         } else {
             for (int[] ys : pastSemesters) {
@@ -392,86 +414,67 @@ public class GUI_App extends Application {
                 List<Course> semCourses = getCoursesForSemester(y, s);
                 if (semCourses.isEmpty()) continue;
 
-                // Semester section header
                 Label semHeader = new Label("  Year " + y + "  ·  Semester " + s);
-                semHeader.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
-                semHeader.setTextFill(Color.web(ACCENT2));
-                semHeader.setStyle("-fx-background-color: " + SURFACE + ";"
-                        + "-fx-border-color: " + ACCENT2 + "; -fx-border-width: 0 0 0 3;"
-                        + "-fx-padding: 8 14;");
+                semHeader.setFont(Font.font(F1(), FontWeight.BOLD, 12));
+                semHeader.setTextFill(Color.web(ACC2()));
+                semHeader.setStyle("-fx-background-color: " + SURF() + ";"
+                        + "-fx-border-color: " + ACC2() + "; -fx-border-width: 0 0 0 3; -fx-padding: 8 14;");
                 semHeader.setMaxWidth(Double.MAX_VALUE);
 
-                // "Select All" toggle for this semester
                 CheckBox selectAll = new CheckBox("Select All");
                 styleCheckBox(selectAll);
-                selectAll.setFont(Font.font("Courier New", 11));
-                selectAll.setTextFill(Color.web(TEXT_SEC));
+                selectAll.setFont(Font.font(F1(), 11));
+                selectAll.setTextFill(Color.web(TSEC()));
 
-                // Course checkboxes
                 List<CheckBox> rowBoxes = new ArrayList<>();
                 GridPane grid = new GridPane();
-                grid.setHgap(16);
-                grid.setVgap(8);
+                grid.setHgap(16); grid.setVgap(8);
                 grid.setPadding(new Insets(10, 10, 10, 16));
-                grid.setStyle("-fx-background-color: " + CARD + ";"
-                        + "-fx-border-color: " + BORDER + "; -fx-border-radius: 6;"
-                        + "-fx-background-radius: 6;");
+                grid.setStyle("-fx-background-color: " + CARD() + ";"
+                        + "-fx-border-color: " + BORD() + "; -fx-border-radius: 6; -fx-background-radius: 6;");
 
                 int col = 0, row = 0;
                 for (Course c : semCourses) {
-                    CheckBox cb = new CheckBox(c.getCode() + "  –  " + c.getName()
-                            + "  [" + c.getCreditHours() + " CH]");
+                    CheckBox cb = new CheckBox(c.getCode() + "  –  " + c.getName() + "  [" + c.getCreditHours() + " CH]");
                     styleCheckBox(cb);
-                    cb.setTextFill(Color.web(TEXT_PRI));
-                    cb.setFont(Font.font("Courier New", 12));
+                    cb.setTextFill(Color.web(TPRI()));
+                    cb.setFont(Font.font(F1(), 12));
                     cb.setUserData(c.getCode());
                     if (checkedCodes.contains(c.getCode())) cb.setSelected(true);
-
                     cb.selectedProperty().addListener((o, old, nw) -> {
-                        if (nw) checkedCodes.add(c.getCode());
-                        else    checkedCodes.remove(c.getCode());
+                        if (nw) checkedCodes.add(c.getCode()); else checkedCodes.remove(c.getCode());
                         long selected = rowBoxes.stream().filter(CheckBox::isSelected).count();
                         selectAll.setSelected(selected == rowBoxes.size());
                     });
-
                     rowBoxes.add(cb);
                     grid.add(cb, col, row);
-                    col++;
-                    if (col == 2) { col = 0; row++; }
+                    col++; if (col == 2) { col = 0; row++; }
                 }
-
-                selectAll.setOnAction(e -> {
-                    boolean sel = selectAll.isSelected();
-                    rowBoxes.forEach(cb -> cb.setSelected(sel));
-                });
+                selectAll.setOnAction(e -> rowBoxes.forEach(cb -> cb.setSelected(selectAll.isSelected())));
 
                 HBox selAllRow = new HBox(selectAll);
                 selAllRow.setAlignment(Pos.CENTER_RIGHT);
                 selAllRow.setPadding(new Insets(0, 10, 4, 0));
-
                 listContainer.getChildren().addAll(semHeader, selAllRow, grid);
             }
         }
 
         ScrollPane scroll = new ScrollPane(listContainer);
         scroll.setFitToWidth(true);
-        scroll.setStyle("-fx-background: " + BG + "; -fx-background-color: " + BG + ";"
-                + "-fx-border-color: transparent;");
+        scroll.setStyle("-fx-background: " + BG() + "; -fx-background-color: " + BG() + "; -fx-border-color: transparent;");
         VBox.setVgrow(scroll, Priority.ALWAYS);
         content.getChildren().add(scroll);
 
-        // Bottom nav
         Button back   = backBtn();
         back.setOnAction(e -> showStep4());
         Button submit = nextBtn("View Recommendations →");
-        submit.setStyle(submit.getStyle().replace(ACCENT2, ACCENT));
+        submit.setStyle(submit.getStyle().replace(ACC2(), ACC()));
         submit.setOnAction(e -> showResults());
 
         HBox nav = new HBox(12, back, submit);
         nav.setAlignment(Pos.CENTER);
         nav.setPadding(new Insets(14, 40, 20, 40));
-        nav.setStyle("-fx-background-color: " + SURFACE + ";"
-                + "-fx-border-color: " + BORDER + "; -fx-border-width: 1 0 0 0;");
+        nav.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + BORD() + "; -fx-border-width: 1 0 0 0;");
         content.getChildren().add(nav);
 
         fadeIn(content);
@@ -482,18 +485,14 @@ public class GUI_App extends Application {
     //  RESULTS PAGE
     // ══════════════════════════════════════════════════════════════════════════
     private void showResults() {
-        // ── Build student
         String yearStr = yearGroup.getSelectedToggle().getUserData().toString().replaceAll("[^0-9]", "");
         String semStr  = semesterGroup.getSelectedToggle().getUserData().toString().replaceAll("[^0-9]", "");
-
         int year = Integer.parseInt(yearStr);
         int sem  = Integer.parseInt(semStr);
-        
+
         String major = ((RadioButton) majorGroup.getSelectedToggle()).getUserData().toString();
         String track = ((RadioButton) trackGroup.getSelectedToggle()).getUserData().toString();
         double gpa   = Double.parseDouble(gpaField.getText().trim());
-        //int year     = Integer.parseInt(yearGroup.getSelectedToggle().getUserData().toString());
-        //int sem      = Integer.parseInt(semesterGroup.getSelectedToggle().getUserData().toString());
         String name  = nameField.getText().trim();
         String id    = idField.getText().trim();
 
@@ -505,96 +504,93 @@ public class GUI_App extends Application {
             return;
         }
 
-        // ── Call services
-        List<Course> available;
-        if (major.equals("AI")) {
-            available = new AdvisorService_AI(allCourses).getAvailableCourses(student);
-        } else {
-            available = new AdvisorService_CS(allCourses).getAvailableCourses(student);
-        }
-
-        List<RecommendationBlock> recs =
-                new RecommendationService(allCourses).getSemesterRecommendation(student);
-
+        List<Course> available = major.equals("AI")
+                ? new AdvisorService_AI(allCourses).getAvailableCourses(student)
+                : new AdvisorService_CS(allCourses).getAvailableCourses(student);
+        List<RecommendationBlock> recs = new RecommendationService(allCourses).getSemesterRecommendation(student);
         String loadType = LoadService.getLoadType(gpa);
         int    maxCH    = LoadService.getMaxCreditHours(gpa);
 
-        // ── Build results UI
         BorderPane shell = new BorderPane();
-        shell.setStyle("-fx-background-color: " + BG + ";");
+        shell.setStyle("-fx-background-color: " + BG() + ";");
 
-        // Header
+        // ── Header
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
         header.setPadding(new Insets(18, 30, 18, 30));
-        header.setStyle("-fx-background-color: " + SURFACE + ";"
-                + "-fx-border-color: " + BORDER + "; -fx-border-width: 0 0 1 0;");
+        header.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + BORD() + "; -fx-border-width: 0 0 1 0;");
 
         Label logo = new Label("◈ ACADEMIC ADVISOR");
-        logo.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
-        logo.setTextFill(Color.web(ACCENT));
+        logo.setFont(Font.font(F1(), FontWeight.BOLD, 15));
+        logo.setTextFill(Color.web(ACC()));
 
         Region hsp = new Region();
         HBox.setHgrow(hsp, Priority.ALWAYS);
 
+        Button themeBtn = makeThemeBtn();
+        themeBtn.setOnAction(e -> { darkMode = !darkMode; showResults(); });
+
         Button restart = new Button("↺  Start Over");
-        restart.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
-        restart.setTextFill(Color.web(TEXT_SEC));
-        restart.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORDER + ";"
-                + "-fx-border-radius: 6; -fx-padding: 6 14; -fx-cursor: hand;");
-        restart.setOnMouseEntered(e -> restart.setStyle(
-                "-fx-background-color: " + SURFACE + "; -fx-border-color: " + ACCENT2 + ";"
-                + "-fx-border-radius: 6; -fx-padding: 6 14; -fx-cursor: hand;"));
-        restart.setOnMouseExited(e -> restart.setStyle(
-                "-fx-background-color: transparent; -fx-border-color: " + BORDER + ";"
-                + "-fx-border-radius: 6; -fx-padding: 6 14; -fx-cursor: hand;"));
+        restart.setFont(Font.font(F1(), FontWeight.BOLD, 12));
+        restart.setTextFill(Color.web(TSEC()));
+        String rbBase = "-fx-border-radius: 6; -fx-padding: 6 14; -fx-cursor: hand;";
+        restart.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + ";" + rbBase);
+        restart.setOnMouseEntered(e -> restart.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + ACC2() + ";" + rbBase));
+        restart.setOnMouseExited(e  -> restart.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + ";" + rbBase));
         restart.setOnAction(e -> {
             checkedCodes.clear();
             gpaField.clear(); nameField.clear(); idField.clear();
             majorGroup = new ToggleGroup(); trackGroup = new ToggleGroup();
-            yearGroup = new ToggleGroup(); semesterGroup = new ToggleGroup();
+            yearGroup  = new ToggleGroup(); semesterGroup = new ToggleGroup();
             showStep1();
         });
 
-        header.getChildren().addAll(logo, hsp, restart);
+        header.getChildren().addAll(logo, hsp, themeBtn, new Label("  "), restart);
 
-        // Student badge
+        // ── Student badge
         HBox badge = new HBox(30);
         badge.setAlignment(Pos.CENTER_LEFT);
         badge.setPadding(new Insets(20, 30, 16, 30));
-        badge.setStyle("-fx-background-color: " + SURFACE + ";"
-                + "-fx-border-color: " + BORDER + "; -fx-border-width: 0 0 1 0;");
-
+        badge.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + BORD() + "; -fx-border-width: 0 0 1 0;");
         badge.getChildren().addAll(
-            badgeField("NAME",    name),
-            badgeField("ID",      id),
-            badgeField("MAJOR",   major),
-            badgeField("TRACK",   track),
-            badgeField("GPA",     String.valueOf(gpa)),
-            badgeField("YEAR",    "Y" + year + "·S" + sem),
-            colorBadge("LOAD",    loadType, maxCH + " CH max", loadType.equals("Half Load") ? DANGER : loadType.equals("Normal Load") ? GOLD : ACCENT)
+            badgeField("NAME",  name),
+            badgeField("ID",    id),
+            badgeField("MAJOR", major),
+            badgeField("TRACK", track),
+            badgeField("GPA",   String.valueOf(gpa)),
+            badgeField("YEAR",  "Y" + year + "·S" + sem),
+            colorBadge("LOAD",  loadType, maxCH + " CH max",
+                loadType.equals("Half Load") ? DNG() : loadType.equals("Normal Load") ? GLD() : ACC())
         );
 
-        VBox topBar = new VBox(0, header, badge);
-        shell.setTop(topBar);
+        shell.setTop(new VBox(0, header, badge));
 
-        // ── Tabs
-        TabPane tabs = new TabPane();
-        tabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        tabs.setStyle("-fx-background-color: " + BG + "; -fx-tab-min-width: 200;");
+        // ── Custom tab toggle buttons
+        StackPane contentArea = new StackPane();
+        VBox.setVgrow(contentArea, Priority.ALWAYS);
 
-        // Tab 1 – Recommended
-        Tab recTab = new Tab("  ★  Semester Recommendation  ");
-        recTab.setStyle("-fx-background-color: " + CARD + ";");
-        recTab.setContent(buildRecommendationTab(recs, maxCH));
-        tabs.getTabs().add(recTab);
+        ScrollPane recPane   = buildRecommendationTab(recs, maxCH);
+        ScrollPane availPane = buildAvailableTab(available);
+        contentArea.getChildren().addAll(availPane, recPane);
 
-        // Tab 2 – Available
-        Tab availTab = new Tab("  ◎  All Available Courses  ");
-        availTab.setContent(buildAvailableTab(available));
-        tabs.getTabs().add(availTab);
+        Button recBtn   = styledTabBtn("  ★  Semester Recommendation", true);
+        Button availBtn = styledTabBtn("  ◎  All Available Courses",   false);
 
-        shell.setCenter(tabs);
+        recBtn.setOnAction(e   -> { recPane.toFront();   applyTabActive(recBtn, true);   applyTabActive(availBtn, false); });
+        availBtn.setOnAction(e -> { availPane.toFront(); applyTabActive(availBtn, true); applyTabActive(recBtn,   false); });
+        recBtn.setOnMouseEntered(e   -> { if (!isTabActive(recBtn))   applyTabHover(recBtn);   });
+        recBtn.setOnMouseExited(e    -> { if (!isTabActive(recBtn))   applyTabActive(recBtn,   false); });
+        availBtn.setOnMouseEntered(e -> { if (!isTabActive(availBtn)) applyTabHover(availBtn); });
+        availBtn.setOnMouseExited(e  -> { if (!isTabActive(availBtn)) applyTabActive(availBtn, false); });
+
+        HBox tabBar = new HBox(14, recBtn, availBtn);
+        tabBar.setAlignment(Pos.CENTER_LEFT);
+        tabBar.setPadding(new Insets(14, 30, 14, 30));
+        tabBar.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + BORD() + "; -fx-border-width: 0 0 1 0;");
+
+        VBox centerBox = new VBox(0, tabBar, contentArea);
+        VBox.setVgrow(contentArea, Priority.ALWAYS);
+        shell.setCenter(centerBox);
 
         fadeIn(shell);
         primaryStage.setScene(new Scene(shell, 820, 700));
@@ -604,51 +600,40 @@ public class GUI_App extends Application {
     private ScrollPane buildRecommendationTab(List<RecommendationBlock> recs, int maxCH) {
         VBox box = new VBox(20);
         box.setPadding(new Insets(24, 30, 30, 30));
-        box.setStyle("-fx-background-color: " + BG + ";");
+        box.setStyle("-fx-background-color: " + BG() + ";");
 
         if (recs.isEmpty()) {
             Label msg = new Label("No recommendations could be generated.\nCheck that your completed courses and GPA are correct.");
-            msg.setTextFill(Color.web(TEXT_SEC));
-            msg.setFont(Font.font("Courier New", 13));
+            msg.setTextFill(Color.web(TSEC()));
+            msg.setFont(Font.font(F1(), 13));
             box.getChildren().add(msg);
         } else {
             for (RecommendationBlock block : recs) {
-                // Block header
-                String tagColor = block.getType().equals("FIXED") ? ACCENT : GOLD;
-                HBox blockHeader = new HBox(10);
-                blockHeader.setAlignment(Pos.CENTER_LEFT);
+                String tagColor = block.getType().equals("FIXED") ? ACC() : GLD();
 
                 Label tag = new Label("  " + block.getType() + "  ");
-                tag.setFont(Font.font("Courier New", FontWeight.BOLD, 10));
+                tag.setFont(Font.font(F1(), FontWeight.BOLD, 10));
                 tag.setTextFill(Color.web(tagColor));
-                tag.setStyle("-fx-background-color: " + tagColor + "22;"
-                        + "-fx-border-color: " + tagColor + "; -fx-border-radius: 3;"
-                        + "-fx-padding: 2 8;");
+                tag.setStyle("-fx-background-color: " + tagColor + "22; -fx-border-color: " + tagColor
+                        + "; -fx-border-radius: 3; -fx-padding: 2 8;");
 
                 Label msg = new Label(block.getMessage());
-                msg.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
-                msg.setTextFill(Color.web(TEXT_PRI));
+                msg.setFont(Font.font(F1(), FontWeight.BOLD, 15));
+                msg.setTextFill(Color.web(TPRI()));
 
-                // CH counter
                 int blockCH = block.getCourses().stream().mapToInt(Course::getCreditHours).sum();
                 Label chCount = new Label(blockCH + " CH");
-                chCount.setFont(Font.font("Courier New", 12));
-                chCount.setTextFill(Color.web(TEXT_SEC));
+                chCount.setFont(Font.font(F1(), 12));
+                chCount.setTextFill(Color.web(TSEC()));
 
-                Region sp = new Region();
-                HBox.setHgrow(sp, Priority.ALWAYS);
-                blockHeader.getChildren().addAll(tag, msg, sp, chCount);
+                Region sp = new Region(); HBox.setHgrow(sp, Priority.ALWAYS);
+                HBox blockHeader = new HBox(10, tag, msg, sp, chCount);
+                blockHeader.setAlignment(Pos.CENTER_LEFT);
 
-                // Course rows
                 VBox courses = new VBox(6);
-                courses.setStyle("-fx-background-color: " + CARD + ";"
-                        + "-fx-border-color: " + BORDER + "; -fx-border-radius: 8;"
-                        + "-fx-padding: 12;");
-
-                for (Course c : block.getCourses()) {
-                    HBox row = courseRow(c, tagColor);
-                    courses.getChildren().add(row);
-                }
+                courses.setStyle("-fx-background-color: " + CARD() + "; -fx-border-color: " + BORD()
+                        + "; -fx-border-radius: 8; -fx-padding: 12;");
+                for (Course c : block.getCourses()) courses.getChildren().add(courseRow(c, tagColor));
 
                 box.getChildren().addAll(blockHeader, courses);
             }
@@ -656,7 +641,7 @@ public class GUI_App extends Application {
 
         ScrollPane sp = new ScrollPane(box);
         sp.setFitToWidth(true);
-        sp.setStyle("-fx-background: " + BG + "; -fx-background-color: " + BG + "; -fx-border-color: transparent;");
+        sp.setStyle("-fx-background: " + BG() + "; -fx-background-color: " + BG() + "; -fx-border-color: transparent;");
         return sp;
     }
 
@@ -664,73 +649,66 @@ public class GUI_App extends Application {
     private ScrollPane buildAvailableTab(List<Course> available) {
         VBox box = new VBox(8);
         box.setPadding(new Insets(24, 30, 30, 30));
-        box.setStyle("-fx-background-color: " + BG + ";");
+        box.setStyle("-fx-background-color: " + BG() + ";");
 
         Label header = new Label(available.size() + " courses available to you");
-        header.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
-        header.setTextFill(Color.web(TEXT_SEC));
+        header.setFont(Font.font(F1(), FontWeight.BOLD, 14));
+        header.setTextFill(Color.web(TSEC()));
         box.getChildren().add(header);
 
         if (available.isEmpty()) {
             Label none = new Label("No courses available — all prerequisites may be pending.");
-            none.setTextFill(Color.web(TEXT_SEC));
+            none.setTextFill(Color.web(TSEC()));
             box.getChildren().add(none);
         } else {
-            // Group by category
             Map<String, List<Course>> grouped = new LinkedHashMap<>();
-            for (Course c : available) {
+            for (Course c : available)
                 grouped.computeIfAbsent(c.getCategory(), k -> new ArrayList<>()).add(c);
-            }
+
             for (Map.Entry<String, List<Course>> entry : grouped.entrySet()) {
                 Label catLabel = new Label("  " + entry.getKey().replace("_", " "));
-                catLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 11));
-                catLabel.setTextFill(Color.web(ACCENT2));
-                catLabel.setStyle("-fx-background-color: " + ACCENT2 + "18;"
-                        + "-fx-border-color: " + ACCENT2 + "; -fx-border-width: 0 0 0 2;"
-                        + "-fx-padding: 5 10;");
+                catLabel.setFont(Font.font(F1(), FontWeight.BOLD, 11));
+                catLabel.setTextFill(Color.web(ACC2()));
+                catLabel.setStyle("-fx-background-color: " + ACC2() + "18; -fx-border-color: " + ACC2()
+                        + "; -fx-border-width: 0 0 0 2; -fx-padding: 5 10;");
                 catLabel.setMaxWidth(Double.MAX_VALUE);
-                box.getChildren().add(catLabel);
 
                 VBox catBox = new VBox(5);
-                catBox.setStyle("-fx-background-color: " + CARD + ";"
-                        + "-fx-border-color: " + BORDER + "; -fx-border-radius: 6; -fx-padding: 10;");
-                for (Course c : entry.getValue()) {
-                    catBox.getChildren().add(courseRow(c, ACCENT2));
-                }
-                box.getChildren().add(catBox);
+                catBox.setStyle("-fx-background-color: " + CARD() + "; -fx-border-color: " + BORD()
+                        + "; -fx-border-radius: 6; -fx-padding: 10;");
+                for (Course c : entry.getValue()) catBox.getChildren().add(courseRow(c, ACC2()));
+
+                box.getChildren().addAll(catLabel, catBox);
             }
         }
 
         ScrollPane sp = new ScrollPane(box);
         sp.setFitToWidth(true);
-        sp.setStyle("-fx-background: " + BG + "; -fx-background-color: " + BG + "; -fx-border-color: transparent;");
+        sp.setStyle("-fx-background: " + BG() + "; -fx-background-color: " + BG() + "; -fx-border-color: transparent;");
         return sp;
     }
 
     // ─── Single course row ────────────────────────────────────────────────────
     private HBox courseRow(Course c, String accentColor) {
-        HBox row = new HBox(12);
-        row.setAlignment(Pos.CENTER_LEFT);
-        row.setPadding(new Insets(7, 10, 7, 10));
-        row.setStyle("-fx-background-color: transparent; -fx-border-radius: 5;");
-
         Label code = new Label(c.getCode());
-        code.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+        code.setFont(Font.font(F1(), FontWeight.BOLD, 12));
         code.setTextFill(Color.web(accentColor));
         code.setMinWidth(90);
 
         Label nameL = new Label(c.getName());
-        nameL.setFont(Font.font("Segoe UI", 13));
-        nameL.setTextFill(Color.web(TEXT_PRI));
+        nameL.setFont(Font.font(F2(), 13));
+        nameL.setTextFill(Color.web(TPRI()));
         HBox.setHgrow(nameL, Priority.ALWAYS);
 
         Label ch = new Label(c.getCreditHours() + " CH");
-        ch.setFont(Font.font("Courier New", 11));
-        ch.setTextFill(Color.web(TEXT_SEC));
-        ch.setStyle("-fx-background-color: " + SURFACE + "; -fx-padding: 2 8; -fx-border-radius: 3;");
+        ch.setFont(Font.font(F1(), 11));
+        ch.setTextFill(Color.web(TSEC()));
+        ch.setStyle("-fx-background-color: " + SURF() + "; -fx-padding: 2 8; -fx-border-radius: 3;");
 
-        row.getChildren().addAll(code, nameL, ch);
-
+        HBox row = new HBox(12, code, nameL, ch);
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.setPadding(new Insets(7, 10, 7, 10));
+        row.setStyle("-fx-background-color: transparent; -fx-border-radius: 5;");
         row.setOnMouseEntered(e -> row.setStyle("-fx-background-color: " + accentColor + "15; -fx-border-radius: 5;"));
         row.setOnMouseExited(e  -> row.setStyle("-fx-background-color: transparent; -fx-border-radius: 5;"));
         return row;
@@ -740,76 +718,57 @@ public class GUI_App extends Application {
     //  DATA HELPERS
     // ══════════════════════════════════════════════════════════════════════════
     private void loadCoursesForMajor() {
-     if (majorGroup.getSelectedToggle() != null) {
-         String major = ((RadioButton) majorGroup.getSelectedToggle()).getUserData().toString();
-         String path = major.equals("AI") ? "Data/AI_courses.json" : "Data/CS_courses.json";
-         LoadData loader = new LoadData();
-         allCourses = loader.loadCourses(path);
-     }
- }
+        if (majorGroup.getSelectedToggle() != null) {
+            String major = ((RadioButton) majorGroup.getSelectedToggle()).getUserData().toString();
+            String path  = major.equals("AI") ? "Data/AI_courses.json" : "Data/CS_courses.json";
+            allCourses   = new LoadData().loadCourses(path);
+        }
+    }
 
     private List<Course> getCoursesForSemester(int year, int semester) {
         List<Course> result = new ArrayList<>();
-        for (Course c : allCourses) {
-            if (c.getYear() == year && c.getSemester() == semester) {
+        for (Course c : allCourses)
+            if (c.getYear() == year && c.getSemester() == semester)
                 result.add(c);
-            }
-        }
         return result;
     }
 
     // ══════════════════════════════════════════════════════════════════════════
     //  UI COMPONENT HELPERS
     // ══════════════════════════════════════════════════════════════════════════
-
     private Label bigTitle(String text) {
         Label l = new Label(text);
-        l.setFont(Font.font("Segoe UI", FontWeight.BOLD, 28));
-        l.setTextFill(Color.web(TEXT_PRI));
+        l.setFont(Font.font(F2(), FontWeight.BOLD, 28));
+        l.setTextFill(Color.web(TPRI()));
         return l;
     }
-
     private Label subLabel(String text) {
         Label l = new Label(text);
-        l.setFont(Font.font("Segoe UI", 14));
-        l.setTextFill(Color.web(TEXT_SEC));
+        l.setFont(Font.font(F2(), 14));
+        l.setTextFill(Color.web(TSEC()));
         l.setWrapText(true);
         return l;
     }
-
     private Label sectionLabel(String text) {
         Label l = new Label(text);
-        l.setFont(Font.font("Courier New", FontWeight.BOLD, 11));
-        l.setTextFill(Color.web(TEXT_SEC));
+        l.setFont(Font.font(F1(), FontWeight.BOLD, 11));
+        l.setTextFill(Color.web(TSEC()));
         return l;
     }
 
     private VBox labeledField(String label, TextField field, String prompt) {
         Label lbl = new Label(label.toUpperCase());
-        lbl.setFont(Font.font("Courier New", FontWeight.BOLD, 11));
-        lbl.setTextFill(Color.web(TEXT_SEC));
+        lbl.setFont(Font.font(F1(), FontWeight.BOLD, 11));
+        lbl.setTextFill(Color.web(TSEC()));
 
         field.setPromptText(prompt);
-        field.setFont(Font.font("Segoe UI", 14));
+        field.setFont(Font.font(F2(), 14));
         field.setMaxWidth(Double.MAX_VALUE);
-        field.setStyle(
-                "-fx-background-color: " + CARD + ";"
-                + "-fx-border-color: " + BORDER + "; -fx-border-radius: 7;"
-                + "-fx-text-fill: " + TEXT_PRI + "; -fx-prompt-text-fill: " + TEXT_SEC + ";"
-                + "-fx-padding: 10 14; -fx-background-radius: 7;");
-
-        field.focusedProperty().addListener((o, old, focused) -> {
-            if (focused) field.setStyle(
-                    "-fx-background-color: " + CARD + ";"
-                    + "-fx-border-color: " + ACCENT2 + "; -fx-border-radius: 7;"
-                    + "-fx-text-fill: " + TEXT_PRI + "; -fx-prompt-text-fill: " + TEXT_SEC + ";"
-                    + "-fx-padding: 10 14; -fx-background-radius: 7;");
-            else field.setStyle(
-                    "-fx-background-color: " + CARD + ";"
-                    + "-fx-border-color: " + BORDER + "; -fx-border-radius: 7;"
-                    + "-fx-text-fill: " + TEXT_PRI + "; -fx-prompt-text-fill: " + TEXT_SEC + ";"
-                    + "-fx-padding: 10 14; -fx-background-radius: 7;");
-        });
+        String base = "-fx-background-color: " + CARD() + "; -fx-border-radius: 7; -fx-background-radius: 7;"
+                    + "-fx-text-fill: " + TPRI() + "; -fx-prompt-text-fill: " + TSEC() + "; -fx-padding: 10 14;";
+        field.setStyle(base + "-fx-border-color: " + BORD() + ";");
+        field.focusedProperty().addListener((o, old, focused) ->
+            field.setStyle(base + "-fx-border-color: " + (focused ? ACC2() : BORD()) + ";"));
 
         VBox box = new VBox(6, lbl, field);
         box.setMaxWidth(Double.MAX_VALUE);
@@ -826,152 +785,134 @@ public class GUI_App extends Application {
     private VBox wrapRadio(RadioButton rb, String code, String full) {
         rb.setUserData(code);
 
-        VBox card = new VBox(4);
+        Label codeLabel = new Label(code);
+        codeLabel.setFont(Font.font(F1(), FontWeight.BOLD, 14));
+        codeLabel.setTextFill(Color.web(TPRI()));
+
+        Label fullLabel = new Label(full);
+        fullLabel.setFont(Font.font(F2(), 11));
+        fullLabel.setTextFill(Color.web(TSEC()));
+
+        rb.setStyle("-fx-text-fill: transparent; -fx-padding: 0; -fx-background-color: transparent;");
+
+        VBox card = new VBox(4, codeLabel, fullLabel, rb);
         card.setAlignment(Pos.CENTER);
         card.setPadding(new Insets(14, 20, 14, 20));
         card.setMinWidth(120);
-        card.setStyle("-fx-background-color: " + CARD + "; -fx-border-color: " + BORDER + ";"
+        card.setStyle("-fx-background-color: " + CARD() + "; -fx-border-color: " + BORD() + ";"
                 + "-fx-border-radius: 8; -fx-background-radius: 8; -fx-cursor: hand;");
 
-        Label codeLabel = new Label(code);
-        codeLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
-        codeLabel.setTextFill(Color.web(TEXT_PRI));
-
-        Label fullLabel = new Label(full);
-        fullLabel.setFont(Font.font("Segoe UI", 11));
-        fullLabel.setTextFill(Color.web(TEXT_SEC));
-
-        rb.setStyle("-fx-text-fill: transparent; -fx-padding: 0; -fx-background-color: transparent;");
-        card.getChildren().addAll(codeLabel, fullLabel, rb);
-
-        // Hover & selection highlight
         Runnable updateStyle = () -> {
-            boolean selected = rb.isSelected();
-            String border = selected ? ACCENT2 : BORDER;
-            String bg     = selected ? ACCENT2 + "18" : CARD;
-            card.setStyle("-fx-background-color: " + bg + "; -fx-border-color: " + border + ";"
+            boolean sel = rb.isSelected();
+            card.setStyle("-fx-background-color: " + (sel ? ACC2() + "18" : CARD()) + ";"
+                    + "-fx-border-color: " + (sel ? ACC2() : BORD()) + ";"
                     + "-fx-border-radius: 8; -fx-background-radius: 8; -fx-cursor: hand;");
-            codeLabel.setTextFill(Color.web(selected ? ACCENT2 : TEXT_PRI));
+            codeLabel.setTextFill(Color.web(sel ? ACC2() : TPRI()));
         };
-
         rb.selectedProperty().addListener((o, old, nw) -> updateStyle.run());
         card.setOnMouseClicked(e -> { rb.setSelected(true); updateStyle.run(); });
         card.setOnMouseEntered(e -> {
             if (!rb.isSelected())
-                card.setStyle("-fx-background-color: " + SURFACE + "; -fx-border-color: " + ACCENT2 + "77;"
+                card.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + ACC2() + "77;"
                         + "-fx-border-radius: 8; -fx-background-radius: 8; -fx-cursor: hand;");
         });
         card.setOnMouseExited(e -> updateStyle.run());
-
         return card;
     }
 
     private Button nextBtn(String label) {
         Button b = new Button(label);
-        b.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
+        b.setFont(Font.font(F1(), FontWeight.BOLD, 13));
         b.setTextFill(Color.web("#FFFFFF"));
-        b.setStyle("-fx-background-color: " + ACCENT2 + "; -fx-background-radius: 8;"
-                + "-fx-padding: 10 28; -fx-cursor: hand;");
-        b.setOnMouseEntered(e -> b.setStyle(
-                "-fx-background-color: #5299e0; -fx-background-radius: 8; -fx-padding: 10 28; -fx-cursor: hand;"));
-        b.setOnMouseExited(e -> b.setStyle(
-                "-fx-background-color: " + ACCENT2 + "; -fx-background-radius: 8; -fx-padding: 10 28; -fx-cursor: hand;"));
+        b.setStyle("-fx-background-color: " + ACC2() + "; -fx-background-radius: 8; -fx-padding: 10 28; -fx-cursor: hand;");
+        b.setOnMouseEntered(e -> b.setStyle("-fx-background-color: " + BHOV() + "; -fx-background-radius: 8; -fx-padding: 10 28; -fx-cursor: hand;"));
+        b.setOnMouseExited(e  -> b.setStyle("-fx-background-color: " + ACC2() + "; -fx-background-radius: 8; -fx-padding: 10 28; -fx-cursor: hand;"));
         return b;
     }
-
     private Button backBtn() {
         Button b = new Button("← Back");
-        b.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
-        b.setTextFill(Color.web(TEXT_SEC));
-        b.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORDER + ";"
-                + "-fx-border-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;");
-        b.setOnMouseEntered(e -> b.setStyle(
-                "-fx-background-color: " + SURFACE + "; -fx-border-color: " + TEXT_SEC + ";"
-                + "-fx-border-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"));
-        b.setOnMouseExited(e -> b.setStyle(
-                "-fx-background-color: transparent; -fx-border-color: " + BORDER + ";"
-                + "-fx-border-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"));
+        b.setFont(Font.font(F1(), FontWeight.BOLD, 13));
+        b.setTextFill(Color.web(TSEC()));
+        b.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + "; -fx-border-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;");
+        b.setOnMouseEntered(e -> b.setStyle("-fx-background-color: " + SURF() + "; -fx-border-color: " + TSEC() + "; -fx-border-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"));
+        b.setOnMouseExited(e  -> b.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + "; -fx-border-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"));
         return b;
     }
-
     private void styleCheckBox(CheckBox cb) {
-        cb.setStyle("-fx-text-fill: " + TEXT_PRI + "; -fx-cursor: hand;");
+        cb.setStyle("-fx-text-fill: " + TPRI() + "; -fx-cursor: hand;");
     }
 
     private HBox badgeField(String label, String value) {
-        VBox v = new VBox(2);
-        Label lbl = new Label(label);
-        lbl.setFont(Font.font("Courier New", 9));
-        lbl.setTextFill(Color.web(TEXT_SEC));
-        Label val = new Label(value);
-        val.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
-        val.setTextFill(Color.web(TEXT_PRI));
-        v.getChildren().addAll(lbl, val);
-        return new HBox(v);
+        Label lbl = new Label(label); lbl.setFont(Font.font(F1(), 9));                lbl.setTextFill(Color.web(TSEC()));
+        Label val = new Label(value); val.setFont(Font.font(F1(), FontWeight.BOLD, 13)); val.setTextFill(Color.web(TPRI()));
+        return new HBox(new VBox(2, lbl, val));
+    }
+    private HBox colorBadge(String label, String value, String sub, String color) {
+        Label lbl = new Label(label); lbl.setFont(Font.font(F1(), 9));                lbl.setTextFill(Color.web(TSEC()));
+        Label val = new Label(value); val.setFont(Font.font(F1(), FontWeight.BOLD, 13)); val.setTextFill(Color.web(color));
+        Label s   = new Label(sub);   s.setFont(Font.font(F1(), 10));                 s.setTextFill(Color.web(color));
+        return new HBox(new VBox(2, lbl, val, s));
     }
 
-    private HBox colorBadge(String label, String value, String sub, String color) {
-        VBox v = new VBox(2);
-        Label lbl = new Label(label);
-        lbl.setFont(Font.font("Courier New", 9));
-        lbl.setTextFill(Color.web(TEXT_SEC));
-        Label val = new Label(value);
-        val.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
-        val.setTextFill(Color.web(color));
-        Label s = new Label(sub);
-        s.setFont(Font.font("Courier New", 10));
-        s.setTextFill(Color.web(color));
-        v.getChildren().addAll(lbl, val, s);
-        return new HBox(v);
+    // ── Tab button helpers ────────────────────────────────────────────────────
+    private Button styledTabBtn(String label, boolean active) {
+        Button b = new Button(label);
+        b.setFont(Font.font(F1(), FontWeight.BOLD, 13));
+        b.setMinWidth(230); b.setPrefHeight(40);
+        b.setUserData(active ? "active" : "inactive");
+        applyTabActive(b, active);
+        return b;
     }
+    private void applyTabActive(Button b, boolean active) {
+        b.setUserData(active ? "active" : "inactive");
+        if (active) {
+            b.setStyle("-fx-background-color: " + ACC2() + "; -fx-text-fill: #FFFFFF;"
+                    + "-fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 10 24;");
+        } else {
+            b.setStyle("-fx-background-color: " + CARD() + "; -fx-text-fill: " + TSEC() + ";"
+                    + "-fx-background-radius: 8; -fx-border-color: " + BORD() + ";"
+                    + "-fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 10 24;");
+        }
+    }
+    private void applyTabHover(Button b) {
+        b.setStyle("-fx-background-color: " + SURF() + "; -fx-text-fill: " + TPRI() + ";"
+                + "-fx-background-radius: 8; -fx-border-color: " + ACC2() + ";"
+                + "-fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 10 24;");
+    }
+    private boolean isTabActive(Button b) { return "active".equals(b.getUserData()); }
 
     // ══════════════════════════════════════════════════════════════════════════
     //  ANIMATION & UTILITY
     // ══════════════════════════════════════════════════════════════════════════
     private void fadeIn(Node node) {
         FadeTransition ft = new FadeTransition(Duration.millis(300), node);
-        ft.setFromValue(0); ft.setToValue(1);
-        ft.play();
+        ft.setFromValue(0); ft.setToValue(1); ft.play();
         TranslateTransition tt = new TranslateTransition(Duration.millis(300), node);
-        tt.setFromY(20); tt.setToY(0);
-        tt.play();
+        tt.setFromY(20); tt.setToY(0); tt.play();
     }
-
     private void shakeNode(Node node) {
         TranslateTransition tt = new TranslateTransition(Duration.millis(60), node);
-        tt.setFromX(0); tt.setByX(8);
-        tt.setCycleCount(6); tt.setAutoReverse(true);
-        tt.play();
+        tt.setFromX(0); tt.setByX(8); tt.setCycleCount(6); tt.setAutoReverse(true); tt.play();
     }
-
     private void showInlineError(VBox container, String msg) {
         container.getChildren().removeIf(n -> "error".equals(n.getUserData()));
         Label err = new Label("⚠  " + msg);
         err.setUserData("error");
-        err.setFont(Font.font("Courier New", 12));
-        err.setTextFill(Color.web(DANGER));
-        err.setStyle("-fx-background-color: " + DANGER + "18; -fx-border-color: " + DANGER + ";"
-                + "-fx-border-radius: 5; -fx-padding: 6 12;");
+        err.setFont(Font.font(F1(), 12));
+        err.setTextFill(Color.web(DNG()));
+        err.setStyle("-fx-background-color: " + DNG() + "18; -fx-border-color: " + DNG() + "; -fx-border-radius: 5; -fx-padding: 6 12;");
         container.getChildren().add(err);
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(e -> container.getChildren().remove(err));
         pause.play();
     }
-
     private void showAlert(String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
-        a.setTitle("Error");
-        a.showAndWait();
+        a.setTitle("Error"); a.showAndWait();
     }
-
     private String ordinal(int n) {
         return switch (n) { case 1 -> "1st"; case 2 -> "2nd"; case 3 -> "3rd"; default -> n + "th"; };
     }
 
-    // ══════════════════════════════════════════════════════════════════════════
-    //  MAIN
-    // ══════════════════════════════════════════════════════════════════════════
-    public static void main(String[] args) {
-        launch();
-    }
+    public static void main(String[] args) { launch(); }
 }
