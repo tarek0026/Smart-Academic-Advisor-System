@@ -153,6 +153,7 @@ public class Student {
     // modify it)
     public Set<String> getCompletedCourses() {
         return Collections.unmodifiableSet(completedCourses);
+        
     }
 
     public int getCompletedCoursesCount() {

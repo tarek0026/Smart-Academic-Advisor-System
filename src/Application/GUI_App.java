@@ -18,8 +18,14 @@ import javafx.util.Duration;
 
 import java.util.*;
 
-import javafx.scene.Node;
-import javafx.scene.layout.Region;
+//how ton run
+// javac -encoding UTF-8 --module-path "D:/javafx-sdk-17.0.19/lib" --add-modules javafx.controls,javafx.fxml -cp 
+// ".;lib/gson-2.10.1.jar" src/Application/*.java src/Classes/*.java src/Services/*.java
+// 
+
+// java --module-path "D:/javafx-sdk-17.0.19/lib" --add-modules javafx.controls,javafx.fxml -cp
+//  ".;lib/gson-2.10.1.jar;src" Application.GUI_App
+
 
 public class GUI_App extends Application {
 
@@ -422,12 +428,12 @@ public class GUI_App extends Application {
                         + "-fx-border-color: " + ACC2() + "; -fx-border-width: 0 0 0 3; -fx-padding: 8 14;");
                 semHeader.setMaxWidth(Double.MAX_VALUE);
 
-                CheckBox selectAll = new CheckBox("Select All");
-                styleCheckBox(selectAll);
-                selectAll.setFont(Font.font(F1(), 11));
-                selectAll.setTextFill(Color.web(TSEC()));
-
+                // Create a final list to hold checkboxes for this semester
                 List<CheckBox> rowBoxes = new ArrayList<>();
+                Label semesterCHLabel = new Label("0 CH selected");
+                semesterCHLabel.setFont(Font.font(F1(), 10));
+                semesterCHLabel.setTextFill(Color.web(GLD()));
+
                 GridPane grid = new GridPane();
                 grid.setHgap(16); grid.setVgap(8);
                 grid.setPadding(new Insets(10, 10, 10, 16));
@@ -442,21 +448,84 @@ public class GUI_App extends Application {
                     cb.setFont(Font.font(F1(), 12));
                     cb.setUserData(c.getCode());
                     if (checkedCodes.contains(c.getCode())) cb.setSelected(true);
+
+                    // Create final references for the listener
+                    final List<CheckBox> finalRowBoxes = rowBoxes;
                     cb.selectedProperty().addListener((o, old, nw) -> {
                         if (nw) checkedCodes.add(c.getCode()); else checkedCodes.remove(c.getCode());
-                        long selected = rowBoxes.stream().filter(CheckBox::isSelected).count();
-                        selectAll.setSelected(selected == rowBoxes.size());
+                        updateSemesterCHLabel(semesterCHLabel, finalRowBoxes);
                     });
                     rowBoxes.add(cb);
                     grid.add(cb, col, row);
                     col++; if (col == 2) { col = 0; row++; }
                 }
-                selectAll.setOnAction(e -> rowBoxes.forEach(cb -> cb.setSelected(selectAll.isSelected())));
 
-                HBox selAllRow = new HBox(selectAll);
-                selAllRow.setAlignment(Pos.CENTER_RIGHT);
-                selAllRow.setPadding(new Insets(0, 10, 4, 0));
-                listContainer.getChildren().addAll(semHeader, selAllRow, grid);
+                // Create Select All button with proper scope
+                CheckBox selectAll = new CheckBox("Select All");
+                styleCheckBox(selectAll);
+                selectAll.setFont(Font.font(F1(), 11));
+                selectAll.setTextFill(Color.web(TSEC()));
+                selectAll.setStyle(selectAll.getStyle() + "; -fx-font-weight: bold;");
+
+                // Create Deselect All button
+                Button deselectAllBtn = new Button("Deselect All");
+                deselectAllBtn.setFont(Font.font(F1(), 10));
+                deselectAllBtn.setTextFill(Color.web(TSEC()));
+                deselectAllBtn.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + 
+                        "; -fx-border-radius: 4; -fx-padding: 4 10; -fx-cursor: hand;");
+                deselectAllBtn.setOnMouseEntered(e -> deselectAllBtn.setStyle("-fx-background-color: " + SURF() + 
+                        "; -fx-border-color: " + DNG() + "; -fx-border-radius: 4; -fx-padding: 4 10; -fx-cursor: hand;"));
+                deselectAllBtn.setOnMouseExited(e -> deselectAllBtn.setStyle("-fx-background-color: transparent; -fx-border-color: " + BORD() + 
+                        "; -fx-border-radius: 4; -fx-padding: 4 10; -fx-cursor: hand;"));
+
+                // Create final reference for handlers
+                final List<CheckBox> finalRowBoxes = rowBoxes;
+
+                // Use a flag to prevent cascading updates
+                final boolean[] updatingSelectAll = {false};
+
+                // Select All action handler
+                selectAll.setOnAction(e -> {
+                    updatingSelectAll[0] = true;
+                    boolean selectState = selectAll.isSelected();
+                    for (CheckBox cb : finalRowBoxes) {
+                        cb.setSelected(selectState);
+                    }
+                    updatingSelectAll[0] = false;
+                    updateSemesterCHLabel(semesterCHLabel, finalRowBoxes);
+                });
+
+                // Deselect All button action
+                deselectAllBtn.setOnAction(e -> {
+                    updatingSelectAll[0] = true;
+                    selectAll.setSelected(false);
+                    for (CheckBox cb : finalRowBoxes) {
+                        cb.setSelected(false);
+                    }
+                    updatingSelectAll[0] = false;
+                    updateSemesterCHLabel(semesterCHLabel, finalRowBoxes);
+                });
+
+                // Update Select All checkbox when individual checkboxes change
+                for (CheckBox cb : finalRowBoxes) {
+                    cb.selectedProperty().addListener((o, old, nw) -> {
+                        if (!updatingSelectAll[0]) {
+                            long selected = finalRowBoxes.stream().filter(CheckBox::isSelected).count();
+                            selectAll.setSelected(selected == finalRowBoxes.size());
+                        }
+                    });
+                }
+
+                // Initialize the semester CH label
+                updateSemesterCHLabel(semesterCHLabel, finalRowBoxes);
+
+                // Control panel with Select All, Deselect All, and credit hour display
+                HBox controlPanel = new HBox(14);
+                controlPanel.setAlignment(Pos.CENTER_LEFT);
+                controlPanel.setPadding(new Insets(8, 10, 8, 10));
+                controlPanel.getChildren().addAll(selectAll, deselectAllBtn, new Label("│"), semesterCHLabel);
+
+                listContainer.getChildren().addAll(semHeader, controlPanel, grid);
             }
         }
 
@@ -732,6 +801,24 @@ public class GUI_App extends Application {
             if (c.getYear() == year && c.getSemester() == semester)
                 result.add(c);
         return result;
+    }
+
+    private void updateSemesterCHLabel(Label chLabel, List<CheckBox> rowBoxes) {
+        int totalCH = 0;
+        for (CheckBox cb : rowBoxes) {
+            if (cb.isSelected()) {
+                // Extract course code from checkbox text
+                String courseCode = cb.getUserData().toString();
+                for (Course c : allCourses) {
+                    if (c.getCode().equals(courseCode)) {
+                        totalCH += c.getCreditHours();
+                        break;
+                    }
+                }
+            }
+        }
+        chLabel.setText(totalCH + " CH selected");
+        chLabel.setTextFill(Color.web(totalCH > 0 ? GLD() : TSEC()));
     }
 
     // ══════════════════════════════════════════════════════════════════════════
