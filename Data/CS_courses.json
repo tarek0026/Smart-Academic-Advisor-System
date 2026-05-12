@@ -174,7 +174,7 @@
     "name": "Introduction to Computer Architecture",
     "category": "CS_CORE",
     "creditHours": 3,
-    "prerequisites": ["CSCI212"]
+    "prerequisites": ["CSCI221"]
 },
 {
     "code": "CSCI315",

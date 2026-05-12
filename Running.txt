@@ -1,0 +1,103 @@
+# 🚀 Smart Academic Advisor System — Run Guide
+
+Welcome!
+Follow these steps carefully to download, set up, compile, and run the project successfully on your machine.
+
+---
+
+# 📥 1. Download the Project
+
+1. Open the GitHub repository.
+2. Click on:
+
+```text id="8q3m4r"
+Code → Download ZIP
+```
+
+3. Extract the ZIP file anywhere on your computer.
+
+---
+
+# ☕ 2. Install Requirements
+
+Before running the project, make sure you have:
+
+* Java JDK 17 or later
+* JavaFX SDK
+
+## Download JavaFX
+
+Official website:
+
+https://openjfx.io
+
+After downloading JavaFX SDK, extract it and copy the path of the `lib` folder.
+
+Example:
+
+```text id="jlj1ga"
+D:/javafx-sdk-17.0.19/lib
+```
+
+⚠️ Important:
+You must replace this path in all commands below with your own JavaFX path.
+
+---
+
+# 🛠️ 3. VS Code Configuration (Optional)
+
+If you are using VS Code, add the following line inside:
+
+```text id="hm13lm"
+.vscode/launch.json
+```
+
+```json id="v9jkw9"
+"vmArgs": "--module-path \"D:/javafx-sdk-17.0.19/lib\" --add-modules javafx.controls,javafx.fxml"
+```
+
+---
+
+# ⚙️ 4. Compile the Project
+
+Open CMD or Terminal inside the project folder and run:
+
+```bash id="pq2u9n"
+javac -encoding UTF-8 --module-path "D:/javafx-sdk-17.0.19/lib" --add-modules javafx.controls,javafx.fxml -cp ".;lib/gson-2.10.1.jar" src/Application/*.java src/Classes/*.java src/Services/*.java
+```
+
+---
+
+# ▶️ 5. Run the Project
+
+After successful compilation, run:
+
+```bash id="3yoqqs"
+java --module-path "D:/javafx-sdk-17.0.19/lib" --add-modules javafx.controls,javafx.fxml -cp ".;lib/gson-2.10.1.jar;src" Application.GUI_App
+```
+
+---
+
+# 📌 Important Notes
+
+* Make sure the JavaFX path is correct.
+* Do NOT delete the `lib` folder because it contains the Gson library required for the project.
+* Run all commands from the root project folder.
+
+---
+
+# 💻 Linux / macOS Users
+
+Replace `;` with `:` in the classpath.
+
+Example:
+
+```bash id="3rzvzs"
+-cp ".:lib/gson-2.10.1.jar:src"
+```
+
+---
+
+# ✅ Project Ready
+
+If everything is configured correctly, the Smart Academic Advisor System GUI should open successfully 🎉
